@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".otpverification"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Verification Code"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Subtext -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We have sent a verification code to ********@gmail.com"
+        android:textColor="#888888"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Simple OTP Input Boxes -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="40dp">
+
+        <!-- OTP Box 1 -->
+        <EditText
+            android:id="@+id/otp1"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="12dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:hint="•"
+            android:textColorHint="#CCCCCC" />
+
+        <!-- OTP Box 2 -->
+        <EditText
+            android:id="@+id/otp2"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="12dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:hint="•"
+            android:textColorHint="#CCCCCC" />
+
+        <!-- OTP Box 3 -->
+        <EditText
+            android:id="@+id/otp3"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="12dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:hint="•"
+            android:textColorHint="#CCCCCC" />
+
+        <!-- OTP Box 4 -->
+        <EditText
+            android:id="@+id/otp4"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="12dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:hint="•"
+            android:textColorHint="#CCCCCC" />
+
+        <!-- OTP Box 5 -->
+        <EditText
+            android:id="@+id/otp5"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="12dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:hint="•"
+            android:textColorHint="#CCCCCC" />
+
+        <!-- OTP Box 6 -->
+        <EditText
+            android:id="@+id/otp6"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:hint="•"
+            android:textColorHint="#CCCCCC" />
+    </LinearLayout>
+
+    <!-- Countdown -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Code expires in: 02:59"
+        android:textColor="#888888"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Verify Button -->
+    <Button
+        android:id="@+id/btnverify"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Verify"
+        android:textSize="18sp"
+        android:backgroundTint="#007AFF"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:textColor="#FFFFFF" />
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/iv_back"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Back"
+        android:textSize="18sp"
+        android:backgroundTint="#666666"
+        android:layout_marginHorizontal="16dp"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

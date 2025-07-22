@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/terms_conditions_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".terms">
+
+    <!-- Header: Back arrow and title -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Terms &amp; Conditions"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Scrollable Terms Content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/welcomeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Echo Health"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/lastUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Updated: February 15, 2024"
+                android:textSize="12sp"
+                android:textColor="#888888"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/introText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please read these Terms and Conditions carefully before using the breast cancer prediction application."
+                android:textSize="14sp"
+                android:layout_marginTop="12dp" />
+
+            <!-- Section 1 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. Service Description"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Our app provides preliminary breast cancer risk assessment tools and information. This is not a substitute for professional medical diagnosis."
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+            <!-- Section 2 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. Medical Disclaimer"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The predictions and assessments provided by this application are based on statistical models and should not be considered as medical advice or diagnosis."
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+            <!-- Section 3 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3. Data Privacy"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="We prioritize the security of your medical information. All personal and health data is encrypted and stored according to HIPAA compliance standards."
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+            <!-- Section 4 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4. User Responsibilities"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• Provide accurate information\n• Maintain account security\n• Use the service responsibly\n• Consult healthcare professionals for medical advice"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Buttons Row -->
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/declineBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Decline"
+            android:textColor="#FF3B30"
+            android:backgroundTint="#F8F8F8"
+            android:drawableStart="@drawable/box"
+            android:drawablePadding="8dp"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/acceptContinueBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Accept &amp; Continue"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#FF3B30"
+            android:textColor="@android:color/white"
+            android:padding="12dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Outer blue border -->
+    <circle
+        android:cx="12"
+        android:cy="12"
+        android:r="11"
+        android:strokeColor="#3887F6"
+        android:strokeWidth="2"
+        android:fillColor="#FFFFFF"/>
+    <!-- Envelope icon -->
+    <path
+        android:fillColor="#3887F6"
+        android:pathData="M6,8h12c0.55,0 1,0.45 1,1v6c0,0.55 -0.45,1 -1,1H6c-0.55,0 -1,-0.45 -1,-1V9c0,-0.55 0.45,-1 1,-1zm0,0.5v0.01L12,13l6,-4.49V8.5H6zm12,7.5V10.99l-6,4.51 -6,-4.51V16h12z"/>
+</vector> 

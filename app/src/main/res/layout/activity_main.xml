@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_bg_color"
+    android:id="@+id/main"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:contentDescription="@drawable/logo"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EchoHealth"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Early Detection. Better Outcomes."
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/getStartedBtn"
+        android:layout_width="280dp"
+        android:layout_height="56dp"
+        android:text="Get Started"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="64dp"
+        android:background="@color/white"
+        android:textSize="16sp"
+        android:backgroundTint="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>

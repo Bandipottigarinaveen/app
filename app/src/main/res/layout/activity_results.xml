@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI Analysis Results"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="16dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subtitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Health Assessment"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginTop="4dp" />
+
+        <!-- Risk Score Circle -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/riskScoreCircle"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="24dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/res"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/riskScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2.4"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/riskLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOW RISK"
+                    android:textSize="14sp"
+                    android:textColor="#28a745"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Confidence Level Circle -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/confidenceCircle"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/blu"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/confidenceScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="92%"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/confidenceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confidence Level"
+                    android:textSize="14sp"
+                    android:textColor="#444"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Download Full Report Button -->
+        <Button
+            android:id="@+id/btnDownload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Download Full Report"
+            android:textAllCaps="false"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#4285F4"
+            android:textColor="@android:color/white" />
+
+        <!-- AI Medication Guide Button -->
+        <Button
+            android:id="@+id/btnMedicationGuide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AI Medication Guide"
+            android:textAllCaps="false"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#4285F4"
+            android:textColor="@android:color/white" />
+
+        <!-- Get Recommendations Button -->
+        <Button
+            android:id="@+id/btnRecommendations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Recommendations"
+            android:textAllCaps="false"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#4285F4"
+            android:textColor="@android:color/white" />
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/lastUpdatedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Updated: Today, 5:30 PM"
+            android:textSize="12sp"
+            android:textColor="#888888"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

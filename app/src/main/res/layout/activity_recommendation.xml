@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header with Back Arrow and Title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:padding="4dp"
+                android:src="@drawable/back_arrow" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="All Recommendations"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oral Cancer Assessment"
+            android:textSize="16sp"
+            android:textColor="#8E8E93"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif" />
+
+        <!-- Risk Score Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2.4"
+                android:textSize="48sp"
+                android:textColor="#1C1C1E"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Easy Risk"
+                android:textSize="18sp"
+                android:textColor="#007AFF"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Contact Specialist Button -->
+        <Button
+            android:id="@+id/contactSpecialistButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:text="Contact Specialist"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_blue_button"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Preventive Recommendations Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preventive Recommendations"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Recommendation Items -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/blue_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Regular Oral Examinations (6-month interval)"
+                    android:textSize="16sp"
+                    android:textColor="#1C1C1E"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/blue_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quit Tobacco Products"
+                    android:textSize="16sp"
+                    android:textColor="#1C1C1E"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/blue_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Limit Alcohol Consumption"
+                    android:textSize="16sp"
+                    android:textColor="#1C1C1E"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/blue_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Maintain Good Oral Hygiene"
+                    android:textSize="16sp"
+                    android:textColor="#1C1C1E"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/blue_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Selected Diet Rich in Antioxidants"
+                    android:textSize="16sp"
+                    android:textColor="#1C1C1E"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Warning Signs Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Watch for These Signs"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Warning Signs Items -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/grey_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Persistent Mouth Sores"
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/grey_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="White or Red Patches"
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/grey_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Difficulty Swallowing"
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/grey_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Unexplained Bleeding"
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/grey_bullet"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Changes in Voice"
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:fontFamily="sans-serif" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Share Report Button -->
+        <LinearLayout
+            android:id="@+id/shareButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/rounded_white_button"
+            android:layout_marginBottom="16dp"
+            android:padding="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/share_icon"
+                android:contentDescription="Share"
+                android:layout_marginEnd="12dp"
+                android:tint="#1C1C1E" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share Report"
+                android:textSize="16sp"
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Download Detailed Guide Button -->
+        <LinearLayout
+            android:id="@+id/downloadButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/rounded_white_button"
+            android:layout_marginBottom="24dp"
+            android:padding="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/download_icon"
+                android:contentDescription="Download"
+                android:layout_marginEnd="12dp"
+                android:tint="#1C1C1E" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Download Detailed Guide"
+                android:textSize="16sp"
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Footer -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Updated: May 15, 2024"
+            android:textSize="14sp"
+            android:textColor="#8E8E93"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif" />
+
+    </LinearLayout>
+</ScrollView>

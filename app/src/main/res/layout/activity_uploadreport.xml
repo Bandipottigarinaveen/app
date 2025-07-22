@@ -1,0 +1,190 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#F5F7FE">
+
+    <!-- Back Arrow -->
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/back_arrow"
+        android:layout_gravity="start"
+        android:contentDescription="Back"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Upload Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Report"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <!-- Oval Upload Section -->
+    <FrameLayout
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/oval">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/file" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap to upload your medical report"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose from camera or files"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Camera and File Icons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Camera Icon -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginEnd="24dp">
+                </LinearLayout>
+
+                <!-- Choose File Icon -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Buttons: Take Photo & Choose File -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="24dp">
+
+        <!-- Take Photo Button with Icon -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/corner"
+            android:gravity="center"
+            android:layout_marginEnd="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/camera"
+                android:layout_marginBottom="4dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Take Photo"
+                android:backgroundTint="#F8FAFC"
+                android:textColor="#6A5AE0"/>
+        </LinearLayout>
+
+        <!-- Choose File Button with Icon -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/corner"
+            android:gravity="center"
+            android:layout_marginStart="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/upload"
+                android:layout_marginBottom="4dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Choose File"
+                android:backgroundTint="#F8FAFC"
+                android:textColor="#6A5AE0"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Report View"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:gravity="start"
+        android:layout_gravity="start" />
+
+
+    <!-- Report Preview -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:text="Scanning report\n..."
+        android:textColor="#888888"
+        android:layout_marginTop="24dp"/>
+
+    <!-- Continue Button -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Continue"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#6A5AE0"
+        android:layout_marginTop="24dp"/>
+
+    <!-- Supported Formats Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Supported formats: PDF, JPG, PNG"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>
