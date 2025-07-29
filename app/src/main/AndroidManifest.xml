@@ -6,12 +6,27 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Echohealth"
         tools:targetApi="31">
+        <activity
+            android:name=".helpsupport"
+            android:exported="false" />
+        <activity
+            android:name=".privacypolicy"
+            android:exported="false" />
+        <activity
+            android:name=".retakeupload"
+            android:exported="false" />
+        <activity
+            android:name=".symptom_checker"
+            android:exported="false" />
+        <activity
+            android:name=".dashboard"
+            android:exported="false" />
         <activity
             android:name=".resetpassword"
             android:exported="false" />
