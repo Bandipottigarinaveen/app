@@ -1,86 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
-    android:padding="16dp">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:padding="16dp">
 
-        <!-- Welcome Text with Icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="start"
+            android:paddingBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+        <!-- Header with Welcome and User Icon -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="20dp">
 
             <TextView
-                android:id="@+id/welcome_text"
+                android:id="@+id/welcomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome Sarah!"
+                android:text="Welcome, user"
                 android:textSize="20sp"
-                android:textColor="#000000"
                 android:textStyle="bold"
-                android:layout_alignParentStart="true" />
+                android:textColor="#333333"
+                android:layout_centerInParent="true" />
 
+            <!-- User Profile Icon -->
             <ImageView
-                android:id="@+id/user_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/userProfileIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/profile"
+                android:padding="4dp"
+                android:scaleType="centerInside"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/pro"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp" />
         </RelativeLayout>
 
-        <!-- Daily Health Tip Section -->
-        <RelativeLayout
+        <!-- Daily Health Tip Card -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#EAF0FF"
-            android:padding="12dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="4dp"
-            android:elevation="3dp">
+            android:layout_marginBottom="24dp"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="2dp"
+            card_view:cardBackgroundColor="#F8F9FA">
 
-            <!-- Left Icon -->
-            <ImageView
-                android:id="@+id/health_tip_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/light"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp" />
-            <!-- Health Tip Title -->
-            <TextView
-                android:id="@+id/health_tip_title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Daily Health Tip"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:layout_toEndOf="@id/health_tip_icon"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="4dp" />
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
-            <!-- Health Tip Description -->
-            <TextView
-                android:id="@+id/health_tip_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Stay hydrated! Aim to drink 8 glasses of water today"
-                android:textSize="13sp"
-                android:textColor="#333333"
-                android:layout_below="@id/health_tip_title"
-                android:layout_toEndOf="@id/health_tip_icon"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="2dp" />
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/light"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/desc_health_tip_icon" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daily Health Tip"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stay hydrated! Aim to drink 8 glasses of water today"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Feature Buttons Grid -->
         <GridLayout
@@ -88,218 +109,440 @@
             android:layout_height="wrap_content"
             android:columnCount="2"
             android:rowCount="2"
-            android:alignmentMode="alignMargins"
-            android:useDefaultMargins="true"
             android:layout_marginBottom="24dp">
 
-            <!-- Feature Card 1 -->
-            <LinearLayout
+            <!-- Enter Symptoms Button -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/enterSymptomsCard"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_columnWeight="1"
-                android:background="@drawable/rounded"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_margin="6dp">
+                android:layout_margin="8dp"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="2dp"
+                card_view:cardBackgroundColor="#F8F9FA">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/d" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Enter Symptoms"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#000000" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/d"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/desc_enter_symptoms"
+                        android:tint="#007AFF" />
 
-            <!-- Feature Card 2 -->
-            <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enter Symptoms"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:gravity="center" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Upload Reports Button -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/uploadReportsCard"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_columnWeight="1"
-                android:background="@drawable/rounded"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_margin="6dp">
+                android:layout_margin="8dp"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="2dp"
+                card_view:cardBackgroundColor="#F8F9FA">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/up" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload Reports"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#000000" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/up"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/desc_upload_reports"
+                        android:tint="#8B5CF6" />
 
-            <!-- Feature Card 3 -->
-            <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Reports"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:gravity="center" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- View Risk Score Button -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/viewRiskScoreCard"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_columnWeight="1"
-                android:background="@drawable/rounded"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_margin="6dp">
+                android:layout_margin="8dp"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="2dp"
+                card_view:cardBackgroundColor="#F8F9FA">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/riskfactor" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View Risk Score"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#000000" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/riskfactor"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/desc_view_risk_score"
+                        android:tint="#22C55E" />
 
-            <!-- Feature Card 4 -->
-            <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Risk Score"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:gravity="center" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- History Button -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/historyCard"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
                 android:layout_columnWeight="1"
-                android:background="@drawable/rounded"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_margin="6dp">
+                android:layout_margin="8dp"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="2dp"
+                card_view:cardBackgroundColor="#F8F9FA">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/his" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="History"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#000000" />
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/his"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/desc_history"
+                        android:tint="#FF6B35" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="History"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:gravity="center" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </GridLayout>
 
         <!-- Recent Activity Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="start"
+            android:layout_gravity="start"
             android:text="Recent Activity"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginBottom="12dp" />
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/recentActivityContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:gravity="start"
+            android:layout_gravity="start">
 
-            <!-- Activity 1 -->
+            <!-- Today -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Today"
                 android:textColor="#666666"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Symptoms Entry"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textColor="#333333"
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Updated headache symptoms"
-                android:textSize="13sp"
-                android:textColor="#444444"
-                android:layout_marginBottom="20dp" />
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp" />
 
-            <!-- Activity 2 -->
+            <!-- Yesterday -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yesterday"
+                android:textSize="12sp"
                 android:textColor="#666666"
-                android:textSize="13sp" />
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Report Upload"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textColor="#333333"
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Uploaded blood test results"
-                android:textSize="13sp"
-                android:textColor="#444444"
-                android:layout_marginBottom="20dp" />
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp" />
 
-            <!-- Activity 3 -->
+            <!-- 2 days ago -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2 days ago"
+                android:textSize="12sp"
                 android:textColor="#666666"
-                android:textSize="13sp" />
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Risk Assessment"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textColor="#333333"
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Completed risk score evaluation"
-                android:textSize="13sp"
-                android:textColor="#444444"
-                android:layout_marginBottom="20dp" />
+                android:text="Completed monthly check"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp" />
 
-            <!-- Activity 4 -->
+            <!-- 3 days ago -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3 days ago"
+                android:textSize="12sp"
                 android:textColor="#666666"
-                android:textSize="13sp" />
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Viewed History"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textColor="#333333"
+                android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Checked previous entries"
-                android:textSize="13sp"
-                android:textColor="#444444"
-                android:layout_marginBottom="20dp" />
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Home -->
+        <LinearLayout
+            android:id="@+id/homeNavItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home"
+                android:contentDescription="@string/desc_home_nav"
+                android:tint="#007AFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textSize="10sp"
+                android:textColor="#007AFF"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Learn -->
+        <LinearLayout
+            android:id="@+id/learnNavItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_book"
+                android:contentDescription="@string/desc_learn_nav"
+                android:tint="#666666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learn"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Chat -->
+        <LinearLayout
+            android:id="@+id/chatNavItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_chat"
+                android:contentDescription="@string/desc_chat_nav"
+                android:tint="#666666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chat"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Result -->
+        <LinearLayout
+            android:id="@+id/resultNavItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_result"
+                android:contentDescription="@string/desc_result_nav"
+                android:tint="#666666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Result"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Settings -->
+        <LinearLayout
+            android:id="@+id/settingsNavItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/setting"
+                android:contentDescription="@string/desc_settings_nav"
+                android:tint="#666666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textSize="10sp"
+                android:textColor="#666666"
+                android:layout_marginTop="2dp" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+</LinearLayout>

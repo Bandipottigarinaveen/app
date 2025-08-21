@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -8,4 +7,10 @@
     <color name="success_green">#22C55E</color>
     <color name="button_blue">#007AFF</color>
     <color name="subtitle_gray">#6B7280</color>
+    <color name="text_primary">#1C1C1E</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="text_pink">#EC4899</color>
+    <color name="text_green">#22C55E</color>
+    <color name="text_blue">#007AFF</color>
+    <color name="text_red">#FF3B30</color>
 </resources>

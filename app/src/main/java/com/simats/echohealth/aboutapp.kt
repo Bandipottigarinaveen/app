@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class aboutapp : AppCompatActivity() {
+class AboutApp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -15,6 +15,15 @@ class aboutapp : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        
+        setupBackNavigation()
+    }
+    
+    private fun setupBackNavigation() {
+        val backArrow = findViewById<android.widget.ImageView>(R.id.backArrow)
+        backArrow?.setOnClickListener {
+            finish()
         }
     }
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB"
+    android:orientation="vertical">
+
+    <!-- Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="2dp">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Learn Details"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#1C1C1E"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <!-- Header Image -->
+    <ImageView
+        android:id="@+id/headerImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_card_rounded_12dp"
+        android:contentDescription="Header Image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo" />
+
+    <!-- Content Container -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What is Oral Cancer?"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1C1C1E"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-medium" />
+
+            <!-- Body Content -->
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oral cancer refers to cancer that develops in any part of the mouth, including the lips, tongue, gums, floor of the mouth, roof of the mouth, and the lining of the cheeks. It's a serious condition that can be life-threatening if not detected and treated early.\n\nEarly detection significantly improves treatment outcomes and survival rates. Regular self-examinations and professional check-ups are crucial for early identification.\n\nOral cancer can manifest in various forms, including squamous cell carcinoma, which is the most common type. The disease can affect anyone, but certain factors increase the risk significantly.\n\nUnderstanding the basics of oral cancer is the first step toward prevention and early detection. Knowledge empowers individuals to make informed decisions about their health and seek timely medical attention when needed."
+                android:textSize="16sp"
+                android:textColor="#4A4A4A"
+                android:lineSpacingMultiplier="1.5"
+                android:layout_marginBottom="24dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PrivacyPolicy"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="12dp">
 
     <!-- Top Bar -->
     <LinearLayout
@@ -143,31 +149,36 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Buttons -->
+    <!-- Buttons Container -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="16dp"
         android:gravity="center">
 
+        <!-- Decline Button -->
         <Button
             android:id="@+id/btnDecline"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="48dp"
-            android:text="Decline"
+            android:layout_weight="1"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="#E0E0E0"
-            android:textColor="#000000"/>
+            android:backgroundTint="@color/text_secondary"
+            android:text="Decline"
+            android:textColor="#FFFFFF"/>
 
+        <!-- Accept Button -->
         <Button
             android:id="@+id/btnAccept"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="48dp"
-            android:text="Accept &amp; Continue"
-            android:backgroundTint="#007AFF"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/blue"
+            android:text="I Accept"
             android:textColor="#FFFFFF"/>
+
     </LinearLayout>
 
 </LinearLayout>

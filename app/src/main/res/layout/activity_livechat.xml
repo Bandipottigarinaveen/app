@@ -1,231 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    tools:context=".LiveChat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
-    android:padding="16dp">
+    android:background="#FFFFFF">
 
-    <!-- Top Bar -->
+    <!-- Main Content Area -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingBottom="12dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/back_arrow"
-            android:contentDescription="Back" />
-
-        <TextView
-            android:layout_width="0dp"
+        <!-- Top Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="#FFFFFF"
+            android:elevation="2dp">
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/back_arrow"
+                android:contentDescription="@string/desc_back"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="4dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Live Chat Support"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+        </LinearLayout>
+
+        <!-- Chat Status Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="#F8F9FA"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You're now connected with our support assistant"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10:30 AM"
+                android:textColor="#999999"
+                android:textSize="10sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Messages Container -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/messagesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Live Chat Support"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="#000000" />
-    </LinearLayout>
+            android:fillViewport="true"
+            android:padding="16dp"
+            android:clipToPadding="false">
 
-    <!-- Connected Status -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You're now connected with our support assistant"
-        android:textColor="#999999"
-        android:textSize="12sp"
-        android:layout_gravity="center_horizontal" />
-
-    <!-- Timestamp -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10:30 AM"
-        android:textColor="#999999"
-        android:textSize="10sp"
-        android:layout_marginTop="4dp"
-        android:layout_gravity="center_horizontal" />
-
-    <!-- Message: Assistant -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#F1F1F1"
-            android:padding="12dp"
-            android:layout_marginEnd="64dp"
-            android:orientation="vertical"
-            android:elevation="2dp">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/messagesLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hello! How can I assist you today?"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10:30 AM"
-        android:textSize="10sp"
-        android:textColor="#999999"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp" />
+                <!-- Message: Assistant -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
 
-    <!-- Message: User -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_marginTop="12dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_rounded"
+                        android:padding="12dp"
+                        android:layout_marginEnd="64dp"
+                        android:orientation="vertical"
+                        android:elevation="1dp">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hello! How can I assist you today?"
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:30 AM"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Message: User -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_marginBottom="12dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_rounded"
+                        android:padding="12dp"
+                        android:layout_marginStart="64dp"
+                        android:orientation="vertical"
+                        android:elevation="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hi, I have some questions about the screening process"
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="10:31 AM"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Message: Assistant -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_rounded"
+                        android:padding="12dp"
+                        android:layout_marginEnd="64dp"
+                        android:orientation="vertical"
+                        android:elevation="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="I understand your concerns. Let me help you with that. The screening process is designed to be quick and comfortable."
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:31 AM"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Message: User -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_marginBottom="12dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_rounded"
+                        android:padding="12dp"
+                        android:layout_marginStart="64dp"
+                        android:orientation="vertical"
+                        android:elevation="1dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thank you for the information"
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="10:32 AM"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
+                    android:layout_marginBottom="12dp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Message Input Area - Fixed at Bottom -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FAD9E6"
+            android:background="#FFFFFF"
+            android:elevation="8dp"
             android:padding="12dp"
-            android:layout_marginStart="64dp"
-            android:orientation="vertical"
-            android:elevation="2dp">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/messageInput"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Hi, I have some questions about the screening process"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_input"
+                android:hint="Type your message here..."
+                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:minHeight="48dp"
+                android:padding="12dp"
+                android:textSize="14sp"
                 android:textColor="#000000"
-                android:textSize="14sp" />
+                android:textColorHint="#999999" />
+
+            <ImageView
+                android:id="@+id/sendButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_pink_button"
+                android:padding="12dp"
+                android:src="@drawable/ic_send"
+                android:contentDescription="@string/desc_send"
+                android:clickable="true"
+                android:focusable="true"
+                android:backgroundTint="#007AFF"
+                app:tint="#FFFFFF" />
+
         </LinearLayout>
+
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="10:31 AM"
-        android:textSize="10sp"
-        android:textColor="#999999"
-        android:layout_marginTop="2dp" />
-
-    <!-- Message: Assistant -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#F1F1F1"
-            android:padding="12dp"
-            android:layout_marginEnd="64dp"
-            android:orientation="vertical"
-            android:elevation="2dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I understand your concerns. Let me help you with that. The screening process is designed to be quick and comfortable."
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10:31 AM"
-        android:textSize="10sp"
-        android:textColor="#999999"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp" />
-
-    <!-- Message: User -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_marginTop="12dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#FAD9E6"
-            android:padding="12dp"
-            android:layout_marginStart="64dp"
-            android:orientation="vertical"
-            android:elevation="2dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thank you for the information"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="10:32 AM"
-        android:textSize="10sp"
-        android:textColor="#999999"
-        android:layout_marginTop="2dp" />
-
-    <!-- Spacer -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <!-- Message Input -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F5F5F5"
-        android:padding="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="8dp">
-
-        <EditText
-            android:id="@+id/message_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_input"
-            android:hint="Type your message here..."
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="12dp"
-            android:textSize="14sp" />
-
-
-        <ImageView
-            android:id="@+id/send_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/rounded_pink_button"
-            android:padding="12dp"
-            android:src="@drawable/ic_send"
-            android:contentDescription="Send"
-            app:tint="#FFFFFF" />
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

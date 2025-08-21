@@ -28,8 +28,7 @@
             android:padding="12dp"
             android:layout_marginBottom="12dp"
             android:backgroundTint="#FFF0F0"
-            android:elevation="2dp"
-            android:backgroundRadius="12dp">
+            android:elevation="2dp">
 
             <ImageView
                 android:layout_width="40dp"

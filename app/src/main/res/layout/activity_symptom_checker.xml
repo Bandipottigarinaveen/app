@@ -3,227 +3,753 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#FFFFFF">
+    android:background="#F9FAFB"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="20dp">
 
-        <!-- Header with Arrow Icon -->
+        <!-- Header with Back Arrow and Title -->
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:padding="4dp"
+                android:src="@drawable/back_arrow" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Oral Cancer Risk Assessment"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- Hero Section -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#E3F2FD">
 
-            <!-- Back Arrow Icon -->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:contentDescription="Back"
-                android:src="@android:drawable/ic_media_previous"
-                app:tint="#007AFF" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Symptom Checker"
-                android:textColor="#007AFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <!-- Check Your Symptoms -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Risk Assessment"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#1976D2"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please answer the following questions to assess your oral cancer risk. This assessment helps identify potential risk factors and symptoms."
+                    android:textSize="14sp"
+                    android:textColor="#424242"
+                    android:lineSpacingMultiplier="1.4" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Questions Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check Your Symptoms"
+            android:text="Risk Factors &amp; Symptoms"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#000000" />
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Age Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please answer the following questions"
+                    android:text="Age"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/editTextAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter your age"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:background="@drawable/corner"
+                    android:padding="16dp"
+                    android:textSize="16sp"
+                    android:textColor="#1C1C1E"
+                    android:textColorHint="#999999" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Gender Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radioGenderMale"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginBottom="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioGenderFemale"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginBottom="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioGenderOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Other"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Tobacco Use Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you currently use tobacco products, including cigarettes, cigars, pipes, or chewing tobacco?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupTobacco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioTobaccoYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioTobaccoNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Alcohol Consumption Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How often do you consume alcoholic beverages? Do you drink regularly?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupAlcohol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioAlcoholYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioAlcoholNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- HPV Infection Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Have you been diagnosed with HPV (Human Papillomavirus) infection in the past?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupHPV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioHPVYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioHPVNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Betel Quid Use Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you chew betel quid, paan, or similar products containing areca nut?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupBetel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioBetelYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioBetelNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Poor Oral Hygiene Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How would you rate your oral hygiene habits? Do you brush and floss regularly?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupHygiene"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioHygieneYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioHygieneNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Oral Lesions Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Have you noticed any sores, ulcers, or lesions in your mouth that don't heal within 2 weeks?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupLesions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioLesionsYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioLesionsNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Unexplained Bleeding Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+        <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you experience any unexplained bleeding from your mouth, gums, or throat?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupBleeding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioBleedingYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioBleedingNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Difficulty Swallowing Question -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you have difficulty swallowing food or liquids? Does it feel like food gets stuck?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupSwallowing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioSwallowingYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioSwallowingNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
             android:textSize="14sp"
-            android:textColor="#888888"
-            android:layout_marginBottom="24dp" />
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        <!-- Repeat the rest as previously updated with FrameLayout Switches -->
-        <!-- Sore Throat -->
-        <LinearLayout
+        <!-- White or Red Patches Question -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Do you have a sore throat?"
-                android:textSize="14sp" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="8dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Have you noticed any white or red patches in your mouth, on your tongue, or inside your cheeks?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
 
-                <Switch
-                    android:id="@+id/switchSoreThroat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
-        </LinearLayout>
+                <RadioGroup
+                    android:id="@+id/radioGroupPatches"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-        <!-- Mouth Ulcers -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+                    <RadioButton
+                        android:id="@+id/radioPatchesYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
 
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Do you have mouth ulcers?"
-                android:textSize="14sp" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="8dp">
-
-                <Switch
-                    android:id="@+id/switchMouthUlcers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Voice Change -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Have you noticed voice changes?"
-                android:textSize="14sp" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="8dp">
-
-                <Switch
-                    android:id="@+id/switchVoiceChange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Difficulty Swallowing -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="32dp">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Do you have difficulty swallowing?"
-                android:textSize="14sp" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="8dp">
-
-                <Switch
-                    android:id="@+id/switchSwallowing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Rate Symptoms -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rate Your Symptoms"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="How long have you had these symptoms?"
+                    <RadioButton
+                        android:id="@+id/radioPatchesNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
             android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        <EditText
-            android:id="@+id/editDuration"
+        <!-- Oral Cancer Diagnosis Question -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="e.g., 3 days"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="How severe are your symptoms?"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-        <EditText
-            android:id="@+id/editSeverity"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="e.g., Mild"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="24dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Have you ever been diagnosed with oral cancer or any other type of head and neck cancer?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1C1C1E"
+                    android:layout_marginBottom="12dp"
+                    android:lineSpacingMultiplier="1.2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupDiagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioDiagnosisYes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF"
+                        android:layout_marginEnd="8dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioDiagnosisNo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:textColor="#424242"
+                        android:buttonTint="#007AFF" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Analyze Button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAnalyze"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Analyze Symptoms"
+            android:layout_height="56dp"
+            android:text="Analyze Risk Assessment"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:backgroundTint="#007AFF"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/bg_button_rounded_blue" />
+            android:layout_marginBottom="24dp"
+            app:cornerRadius="12dp"
+            app:elevation="4dp" />
 
     </LinearLayout>
 </ScrollView>

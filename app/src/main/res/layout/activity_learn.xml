@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header with Back Arrow and Title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:padding="4dp"
+                android:src="@drawable/back_arrow" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Learn About Oral Cancer"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
+
+        <!-- What is Oral Cancer Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardWhatIsOralCancer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Info Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_book"
+                    app:tint="#007AFF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="What is Oral Cancer?"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Understanding the basics of oral cancer"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Oral Cancer Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Risk Factors Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRiskFactors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Warning Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/warning"
+                    app:tint="#FF6B35" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Risk Factors"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Identifying potential risk factors"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Risk Factors Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/riskfactor" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Prevention & Precautions Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPrevention"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Check Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_check_green"
+                    app:tint="#34C759" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prevention &amp; Precautions"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Steps to prevent oral cancer"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Prevention Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sheild" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Diet Recommendations Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Apple Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_book"
+                    app:tint="#FF3B30" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diet Recommendations"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nutrition for oral health"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Diet Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_medication" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Exercise & Physical Activity Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardExercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Fitness Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_book"
+                    app:tint="#AF52DE" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Exercise &amp; Physical Activity"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Staying active for better health"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Exercise Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_trophy" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Early Detection Signs Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardEarlyDetection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Magnifier Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_scan"
+                    app:tint="#5AC8FA" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Early Detection Signs"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Warning signs to watch for"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Detection Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_result" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Call to Action Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCallToAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_email_rounded_24dp"
+                    android:contentDescription="Megaphone Icon"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_share"
+                    app:tint="#007AFF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Take Action Today"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#1C1C1E"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Start your prevention journey"
+                        android:textSize="14sp"
+                        android:textColor="#666666" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_card_rounded_12dp"
+                    android:contentDescription="Action Thumbnail"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_success_check" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

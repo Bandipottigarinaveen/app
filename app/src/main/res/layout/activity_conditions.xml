@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".terms">
+    tools:context=".Conditions">
 
     <!-- Header: Back arrow and title -->
     <LinearLayout

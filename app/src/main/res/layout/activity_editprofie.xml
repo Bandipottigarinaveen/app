@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9FAFB"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,20 +12,45 @@
         android:padding="20dp"
         android:gravity="center_horizontal">
 
-        <!-- Title -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Header with Back Arrow and Title -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:padding="4dp"
+                android:src="@drawable/back_arrow" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Edit Profile"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
 
         <!-- Profile Picture -->
         <RelativeLayout
+            android:id="@+id/profilePictureContainer"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
 
             <ImageView
                 android:id="@+id/profileImage"
@@ -47,48 +73,14 @@
                 android:elevation="4dp" />
         </RelativeLayout>
 
-        <!-- Profile Completion + Percentage -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Profile Completion"
-                android:textSize="14sp"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/profilePercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="80%"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#007BFF" />
-        </LinearLayout>
-
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:progress="80"
-            android:max="100"
-            android:layout_marginTop="4dp"
-            android:progressTint="#007BFF"
-            android:backgroundTint="#E0E0E0" />
-
         <!-- Full Name -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Full Name"
-            android:layout_marginTop="16dp" />
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/fullName"
@@ -96,14 +88,19 @@
             android:layout_height="wrap_content"
             android:text="Sarah Johnson"
             android:background="@drawable/corner"
-            android:inputType="textPersonName" />
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="16dp" />
 
         <!-- Email Address -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email Address"
-            android:layout_marginTop="12dp" />
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/email"
@@ -111,14 +108,19 @@
             android:layout_height="wrap_content"
             android:text="sarah.johnson@example.com"
             android:background="@drawable/corner"
-            android:inputType="textEmailAddress" />
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp" />
 
         <!-- Phone Number -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Phone Number"
-            android:layout_marginTop="12dp" />
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/phone"
@@ -126,14 +128,19 @@
             android:layout_height="wrap_content"
             android:text="+1 (555) 123-4567"
             android:background="@drawable/corner"
-            android:inputType="phone" />
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:inputType="phone"
+            android:layout_marginBottom="16dp" />
 
         <!-- Date of Birth -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date of Birth"
-            android:layout_marginTop="12dp" />
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/dob"
@@ -141,47 +148,30 @@
             android:layout_height="wrap_content"
             android:text="05/12/1990"
             android:background="@drawable/corner"
-            android:inputType="date" />
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:inputType="date"
+            android:layout_marginBottom="16dp" />
 
-        <!-- Medical ID -->
+        <!-- Username -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Medical ID (Optional)"
-            android:layout_marginTop="12dp" />
+            android:text="Username"
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
 
         <EditText
-            android:id="@+id/medicalId"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter medical ID"
+            android:text="sarahjohnson"
             android:background="@drawable/corner"
-            android:inputType="text" />
-
-        <!-- Emergency Contact Name -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Emergency Contact"
-            android:layout_marginTop="12dp" />
-
-        <EditText
-            android:id="@+id/emergencyName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Michael Johnson"
-            android:background="@drawable/corner"
-            android:inputType="textPersonName" />
-
-        <!-- Emergency Contact Phone -->
-        <EditText
-            android:id="@+id/emergencyPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+1 (555) 987-6543"
-            android:background="@drawable/corner"
-            android:inputType="phone"
-            android:layout_marginTop="8dp" />
+            android:padding="16dp"
+            android:textSize="16sp"
+            android:inputType="text"
+            android:layout_marginBottom="24dp" />
 
         <!-- Change Password -->
         <Button
@@ -189,9 +179,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Change Password"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#DDDDDD"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:padding="16dp"
+            android:textSize="16sp" />
 
         <!-- Save Button -->
         <Button
@@ -199,9 +191,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save Changes"
-            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#007BFF"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:padding="16dp"
+            android:textSize="16sp" />
 
         <!-- Cancel Text -->
         <TextView
@@ -211,6 +205,6 @@
             android:text="Cancel"
             android:textColor="#777777"
             android:textSize="16sp"
-            android:layout_marginTop="12dp" />
+            android:layout_marginBottom="24dp" />
     </LinearLayout>
 </ScrollView>

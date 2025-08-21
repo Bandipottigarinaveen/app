@@ -1,294 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:padding="16dp">
+    android:background="#F9FAFB"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="20dp"
         android:gravity="center_horizontal">
 
-        <!-- Profile Picture -->
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="24dp"
-            android:contentDescription="Profile&amp;Picture"
-            android:src="@drawable/profile" />
-
-        <!-- Name -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="John Smith"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:textColor="#000000" />
-
-        <!-- Username -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="johnsmith"
-            android:textSize="14sp"
-            android:textColor="@color/black" />
-
-        <!-- Edit Profile -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:textSize="14sp"
-            android:textColor="#007AFF"
-            android:layout_marginTop="8dp" />
-
-        <!-- Section: Personal Details -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Personal Details"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp"
-            android:paddingBottom="8dp" />
-
-        <!-- Full Name -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#F5F5F5"
-            android:padding="12dp"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Full Name"
-                android:textSize="12sp"
-                android:textColor="#888888" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="John Smith"
-                android:textSize="14sp"
-                android:textColor="#000000" />
-        </LinearLayout>
-
-        <!-- DOB -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="#F5F5F5"
-            android:orientation="vertical"
-            android:padding="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="date of birth"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="September 15, 1990"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Phone -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#F5F5F5"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Phone Number"
-                android:textSize="12sp"
-                android:textColor="#888888" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="+91"
-                android:textSize="14sp"
-                android:textColor="#000000" />
-        </LinearLayout>
-
-        <!-- Preferences -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Preferences"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Notifications -->
+        <!-- Header with Back Arrow and Edit Profile Button -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="12dp"
-            android:background="#F5F5F5"
             android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="24dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/bell"
-                android:layout_marginEnd="8dp" />
+                android:id="@+id/backArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:padding="4dp"
+                android:src="@drawable/back_arrow" />
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Notifications"
-                android:textSize="14sp" />
-
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true" />
-        </LinearLayout>
-
-        <!-- Settings -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:background="#F5F5F5"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/setting"
-                android:layout_marginEnd="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Privacy Policy -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:background="#F5F5F5"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/pri"
-                android:layout_marginEnd="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Privacy Policy"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Terms of Service -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:background="#F5F5F5"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-
-            <ImageView
-                android:layout_width="13dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/term" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Terms of Service"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Help & Support -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:background="#F5F5F5"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/help"
-                android:layout_marginEnd="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Help &amp; Support"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Log Out (Custom Layout with Icon) -->
-        <LinearLayout
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="#FDECEC"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="#FDECEC">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/logout"
-                android:layout_marginEnd="8dp"
-                android:contentDescription="Logout Icon" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log Out"
-                android:textColor="#FF3B30"
+                android:text="Profile"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="14sp" />
+                android:textColor="#1C1C1E"
+                android:fontFamily="sans-serif-medium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textSize="14sp"
+                android:textColor="#007AFF"
+                android:backgroundTint="#E3F2FD"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:minHeight="36dp"
+                app:cornerRadius="18dp" />
         </LinearLayout>
+
+        <!-- Profile Picture -->
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="32dp">
+
+            <ImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/oval"
+                android:contentDescription="Profile Picture"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile" />
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/oval"
+                android:contentDescription="Edit Photo"
+                android:padding="6dp"
+                android:src="@drawable/camera"
+                android:elevation="4dp" />
+        </RelativeLayout>
+
+        <!-- Full Name -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/userFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="John Smith"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:background="@drawable/corner"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Email Address -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/userEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="johnsmith@email.com"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:background="@drawable/corner"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Phone Number -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/userPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+1 (555) 123-4567"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:background="@drawable/corner"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Date of Birth -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date of Birth"
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/userDOB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="September 15, 1990"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:background="@drawable/corner"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Username/Display Name -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="16sp"
+            android:textColor="#1C1C1E"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/userUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="johnsmith"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:background="@drawable/corner"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp" />
 
     </LinearLayout>
 </ScrollView>

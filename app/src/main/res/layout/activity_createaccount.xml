@@ -6,7 +6,7 @@
     android:background="#F9F9FF"
     android:fillViewport="true"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".createaccount">
+    tools:context=".CreateAccount">
 
     <LinearLayout
         android:layout_width="match_parent"
