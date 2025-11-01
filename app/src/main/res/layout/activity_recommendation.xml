@@ -60,6 +60,7 @@
             android:layout_marginBottom="24dp">
 
             <TextView
+                android:id="@+id/riskScoreValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2.4"
@@ -70,6 +71,7 @@
                 android:layout_marginEnd="12dp" />
 
             <TextView
+                android:id="@+id/riskLevelValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Easy Risk"
@@ -77,21 +79,7 @@
                 android:textColor="#007AFF"
                 android:fontFamily="sans-serif-medium" />
         </LinearLayout>
-
-        <!-- Contact Specialist Button -->
-        <Button
-            android:id="@+id/contactSpecialistButton"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_gravity="center"
-            android:text="Contact Specialist"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:background="@drawable/rounded_blue_button"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="32dp"
-            android:fontFamily="sans-serif-medium" />
+        
 
         <!-- Preventive Recommendations Section -->
         <TextView
@@ -125,6 +113,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/preventiveItem1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -148,6 +137,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/preventiveItem2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -171,6 +161,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/preventiveItem3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -194,6 +185,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/preventiveItem4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -217,6 +209,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/preventiveItem5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -259,6 +252,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/signItem1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -282,6 +276,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/signItem2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -305,6 +300,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/signItem3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -328,6 +324,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/signItem4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -351,6 +348,7 @@
                     android:layout_marginEnd="12dp" />
 
                 <TextView
+                    android:id="@+id/signItem5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -393,37 +391,15 @@
                 android:fontFamily="sans-serif-medium" />
         </LinearLayout>
 
-        <!-- Download Detailed Guide Button -->
-        <LinearLayout
-            android:id="@+id/downloadButton"
+        <!-- Share Result as PDF Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShareResult"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@drawable/rounded_white_button"
-            android:layout_marginBottom="24dp"
-            android:padding="16dp"
-            android:backgroundTint="#FFFFFF"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/download_icon"
-                android:contentDescription="Download"
-                android:layout_marginEnd="12dp"
-                android:tint="#1C1C1E" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Download Detailed Guide"
-                android:textSize="16sp"
-                android:textColor="#1C1C1E"
-                android:fontFamily="sans-serif-medium" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:text="Share Result as PDF"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp" />
 
         <!-- Footer -->
         <TextView

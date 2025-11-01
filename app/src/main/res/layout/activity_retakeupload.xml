@@ -35,32 +35,50 @@
         app:layout_constraintBottom_toBottomOf="@id/backIcon"
         android:layout_marginStart="16dp" />
 
-    <!-- PDF Preview Box -->
-    <LinearLayout
-        android:id="@+id/pdfBox"
+    <!-- Image Preview Box -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imagePreviewCard"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:background="@drawable/bg_card_rounded"
-        android:orientation="vertical"
-        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/backIcon"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/doc"
-            android:contentDescription="PDF Icon" />
+            android:id="@+id/imagePreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="#F0F0F0"
+            android:contentDescription="Image Preview" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="oral_report.pdf"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
-    </LinearLayout>
+        <!-- Fallback content when no image -->
+        <LinearLayout
+            android:id="@+id/fallbackContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#F0F0F0">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/doc"
+                android:contentDescription="Document Icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image Preview"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:textColor="#666666" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <!-- Status message -->
     <LinearLayout
@@ -69,7 +87,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/pdfBox"
+        app:layout_constraintTop_toBottomOf="@id/imagePreviewCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

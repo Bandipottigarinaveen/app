@@ -7,5 +7,6 @@ data class VerifyOtpRequest(
 )
 
 data class VerifyOtpResponse(
-    val message: String
+    val message: String,
+    val token: String? = null
 )

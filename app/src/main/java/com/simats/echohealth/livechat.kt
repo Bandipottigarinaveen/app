@@ -302,11 +302,7 @@ class LiveChat : AppCompatActivity() {
             addAssistantMessage("Typing...")
             val placeholderIndex = messagesLayout.childCount - 2
             
-            var token = getSharedPreferences("AuthPrefs", MODE_PRIVATE).getString("auth_token", null)
-            if (token.isNullOrBlank()) {
-                // Fallback to reset flow token if available
-                token = getSharedPreferences("ResetFlow", MODE_PRIVATE).getString("reset_token", null)
-            }
+            val token = com.simats.echohealth.auth.AuthManager.getAuthToken(this)
             Log.d("LiveChat", "Auth token present: ${!token.isNullOrBlank()}")
             if (token.isNullOrBlank()) {
                 android.widget.Toast.makeText(this, "You're not authenticated. Please login.", android.widget.Toast.LENGTH_LONG).show()

@@ -19,6 +19,7 @@ import com.simats.echohealth.Responses.LoginRequest
 import com.simats.echohealth.Responses.LoginResponse
 import com.simats.echohealth.Retrofit.ApiService
 import com.simats.echohealth.Retrofit.RetrofitClient
+import com.simats.echohealth.auth.AuthManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -125,19 +126,20 @@ class LoginpageActivity : AppCompatActivity() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val body = response.body()
-                    Log.d("LoginPage", "Login success. Body token: ${body?.token}")
-                    Log.d("LoginPage", "Login headers: ${response.headers()}")
-                    // Persist token if provided in body
-                    var storedToken: String? = null
+                    Log.d("LoginPage", "✅ Login success. Body token: ${body?.token}")
+                    Log.d("LoginPage", "📧 User email: $email")
+                    
+                    // Extract token from response
+                    var authToken: String? = null
+                    
+                    // Try to get token from response body first
                     body?.token?.let { token ->
-                        getSharedPreferences("AuthPrefs", MODE_PRIVATE).edit()
-                            .putString("auth_token", token)
-                            .apply()
-                        storedToken = token
-                        Log.d("LoginPage", "Stored auth token (body): $token")
+                        authToken = token
+                        Log.d("LoginPage", "🔑 Token from body: $token")
                     }
-                    // Fallback: check Authorization header (e.g., "Bearer <token>")
-                    if (storedToken.isNullOrBlank()) {
+                    
+                    // Fallback: check Authorization header
+                    if (authToken.isNullOrBlank()) {
                         val authHeader = response.headers()["Authorization"]
                         val headerToken = authHeader
                             ?.removePrefix("Bearer ")
@@ -145,30 +147,79 @@ class LoginpageActivity : AppCompatActivity() {
                             ?.trim()
                             ?.takeIf { it.isNotBlank() }
                         headerToken?.let { token ->
-                            getSharedPreferences("AuthPrefs", MODE_PRIVATE).edit()
-                                .putString("auth_token", token)
-                                .apply()
-                            storedToken = token
-                            Log.d("LoginPage", "Stored auth token (header): $token")
+                            authToken = token
+                            Log.d("LoginPage", "🔑 Token from header: $token")
                         }
                     }
-                    // Final check
-                    val saved = getSharedPreferences("AuthPrefs", MODE_PRIVATE).getString("auth_token", null)
-                    Log.d("LoginPage", "AuthPrefs.auth_token present: ${!saved.isNullOrBlank()}")
-                    Toast.makeText(this@LoginpageActivity, body?.message ?: "Login successful", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@LoginpageActivity, Dashboard::class.java).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    
+                    // Store session using AuthManager
+                    if (!authToken.isNullOrBlank()) {
+                        val sessionStored = AuthManager.storeUserSession(
+                            context = this@LoginpageActivity,
+                            token = authToken!!,
+                            userId = null, // user_id not available in LoginResponse
+                            email = email
+                        )
+                        
+                        if (sessionStored) {
+                            Log.d("LoginPage", "✅ User session stored securely")
+                            Toast.makeText(this@LoginpageActivity, body?.message ?: "Login successful", Toast.LENGTH_SHORT).show()
+                            
+                            // Navigate to Dashboard
+                            val intent = Intent(this@LoginpageActivity, Dashboard::class.java).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            }
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Log.e("LoginPage", "❌ Failed to store user session")
+                            Toast.makeText(this@LoginpageActivity, "Login successful but session storage failed", Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Log.e("LoginPage", "❌ No authentication token received")
+                        Toast.makeText(this@LoginpageActivity, "Login successful but no authentication token received", Toast.LENGTH_LONG).show()
                     }
-                    startActivity(intent)
-                    finish()
                 } else {
-                    val errorMsg = try { response.errorBody()?.string() } catch (_: Exception) { null }
-                    Toast.makeText(this@LoginpageActivity, "Login failed: ${response.code()} ${errorMsg ?: ""}", Toast.LENGTH_LONG).show()
+                    // Parse error response to show helpful message
+                    val errorMsg = try { 
+                        val errorBody = response.errorBody()?.string()
+                        if (!errorBody.isNullOrBlank()) {
+                            try {
+                                val jsonObject = org.json.JSONObject(errorBody)
+                                jsonObject.optString("error", jsonObject.optString("message", errorBody))
+                            } catch (_: Exception) {
+                                errorBody
+                            }
+                        } else {
+                            null
+                        }
+                    } catch (_: Exception) { null }
+                    
+                    // Show user-friendly error message
+                    val userMessage = when {
+                        response.code() == 401 -> errorMsg ?: "Invalid email or password. Please check your credentials."
+                        response.code() == 404 -> errorMsg ?: "User not found. Please check your email address."
+                        response.code() == 403 -> errorMsg ?: "Account is inactive. Please contact support."
+                        response.code() == 400 -> errorMsg ?: "Invalid request. Please check your input."
+                        !errorMsg.isNullOrBlank() -> errorMsg
+                        else -> "Login failed. Please try again later."
+                    }
+                    
+                    Log.e("LoginPage", "❌ Login failed: ${response.code()} - $errorMsg")
+                    Toast.makeText(this@LoginpageActivity, userMessage, Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(this@LoginpageActivity, "Network error: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                Log.e("LoginPage", "❌ Network error: ${t.message}", t)
+                val errorMessage = when {
+                    t.message?.contains("timeout", ignoreCase = true) == true -> 
+                        "Connection timeout. Please check your internet and try again."
+                    t.message?.contains("Unable to resolve host", ignoreCase = true) == true -> 
+                        "Cannot reach server. Please check your internet connection."
+                    else -> "Network error: ${t.localizedMessage ?: "Please check your connection and try again."}"
+                }
+                Toast.makeText(this@LoginpageActivity, errorMessage, Toast.LENGTH_LONG).show()
             }
         })
     }

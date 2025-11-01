@@ -60,6 +60,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    
+    // Google Play Billing
+    implementation(libs.billing.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

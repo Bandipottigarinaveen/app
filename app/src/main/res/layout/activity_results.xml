@@ -35,6 +35,17 @@
             android:textColor="#666666"
             android:layout_marginTop="4dp" />
 
+        <!-- Mode Display -->
+        <TextView
+            android:id="@+id/modeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="#4285F4"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
+
         <!-- Risk Score Circle -->
         <androidx.cardview.widget.CardView
             android:id="@+id/riskScoreCircle"
@@ -44,10 +55,11 @@
             >
 
             <LinearLayout
+                android:id="@+id/riskCircleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="@drawable/res"
+                android:background="@drawable/ring_green"
                 android:orientation="vertical">
 
                 <TextView
@@ -106,27 +118,19 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Download Full Report Button -->
+        <!-- Start Assessment (shown only when no previous result) -->
         <Button
-            android:id="@+id/btnDownload"
+            android:id="@+id/btnStartAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Download Full Report"
+            android:text="Start Assessment"
             android:textAllCaps="false"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#4285F4"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
-        <!-- AI Medication Guide Button -->
-        <Button
-            android:id="@+id/btnMedicationGuide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="AI Medication Guide"
-            android:textAllCaps="false"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="#4285F4"
-            android:textColor="@android:color/white" />
+        <!-- Removed Download Full Report and AI Medication Guide buttons -->
 
         <!-- Get Recommendations Button -->
         <Button

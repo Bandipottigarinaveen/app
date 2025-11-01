@@ -3,8 +3,10 @@ package com.simats.echohealth
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
+import com.simats.echohealth.auth.AuthManager
 
 class SettingPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,41 +41,8 @@ class SettingPage : AppCompatActivity() {
             }
         }
         
-        // Google Fit Integration
-        val googleFitLayout = findViewById<LinearLayout>(R.id.btnNavigateSettingsToGoogleFit)
-        googleFitLayout?.setOnClickListener {
-            showFeatureInfo(getString(R.string.google_fit_integration), getString(R.string.google_fit_info))
-        }
         
-        // EHR Synchronization
-        val ehrLayout = findViewById<LinearLayout>(R.id.btnNavigateSettingsToEHR)
-        ehrLayout?.setOnClickListener {
-            showFeatureInfo(getString(R.string.ehr_synchronization), getString(R.string.ehr_info))
-        }
         
-        // HIPAA Compliance
-        val hipaaLayout = findViewById<LinearLayout>(R.id.btnNavigateSettingsToHIPAA)
-        hipaaLayout?.setOnClickListener {
-            showFeatureInfo(getString(R.string.hipaa_compliant), getString(R.string.hipaa_info))
-        }
-        
-        // Data Export
-        val dataExportLayout = findViewById<LinearLayout>(R.id.btnNavigateSettingsToDataExport)
-        dataExportLayout?.setOnClickListener {
-            showFeatureInfo(getString(R.string.data_export), getString(R.string.data_export_info))
-        }
-        
-        // Health Alerts
-        val healthAlertsLayout = findViewById<LinearLayout>(R.id.btnNavigateSettingsToHealthAlerts)
-        healthAlertsLayout?.setOnClickListener {
-            showFeatureInfo(getString(R.string.health_alerts), getString(R.string.health_alerts_config))
-        }
-        
-        // Reminders
-        val remindersLayout = findViewById<LinearLayout>(R.id.btnNavigateSettingsToReminders)
-        remindersLayout?.setOnClickListener {
-            showFeatureInfo(getString(R.string.reminders), getString(R.string.reminders_config))
-        }
         
         // Terms of Service navigation
         val termsLayout = findViewById<LinearLayout>(R.id.btn_terms)
@@ -133,33 +102,7 @@ class SettingPage : AppCompatActivity() {
     }
     
     private fun setupSwitches() {
-        val switchGoogleFit = findViewById<android.widget.Switch>(R.id.switchGoogleFit)
-        switchGoogleFit?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                showFeatureInfo(getString(R.string.google_fit_connected), getString(R.string.google_fit_info))
-            }
-        }
-        
-        val switchEHR = findViewById<android.widget.Switch>(R.id.switchEHR)
-        switchEHR?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                showFeatureInfo(getString(R.string.ehr_connected), getString(R.string.ehr_info))
-            }
-        }
-        
-        val switchHealthAlerts = findViewById<android.widget.Switch>(R.id.switchHealthAlerts)
-        switchHealthAlerts?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                showFeatureInfo(getString(R.string.health_alerts_enabled), getString(R.string.health_alerts_info))
-            }
-        }
-        
-        val switchReminders = findViewById<android.widget.Switch>(R.id.switchReminders)
-        switchReminders?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                showFeatureInfo(getString(R.string.reminders_enabled), getString(R.string.reminders_info))
-            }
-        }
+        // No switches remaining after removing Health Data and Notifications sections
     }
     
     private fun showFeatureInfo(title: String, message: String) {
@@ -197,11 +140,40 @@ class SettingPage : AppCompatActivity() {
     }
     
     private fun performLogout() {
-        // Clear user session data here
-        // For now, just navigate back to login
-        val intent = Intent(this, LoginpageActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
+        try {
+            android.util.Log.d("Settings", "🚪 Performing logout")
+            
+            // Clear user session using AuthManager
+            val sessionCleared = AuthManager.clearUserSession(this)
+            
+            // Clear activity history from both SharedPreferences and local DB
+            try {
+                ActivityLogStore.clearAllActivities(this)
+                ActivityDatabase.clear(this)
+                android.util.Log.d("Settings", "✅ Activity history cleared from both sources")
+            } catch (e: Exception) {
+                android.util.Log.e("Settings", "❌ Failed to clear activity history: ${e.message}")
+            }
+            
+            if (sessionCleared) {
+                android.util.Log.d("Settings", "✅ User session cleared successfully")
+                
+                // Show logout confirmation
+                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+                
+                // Navigate to login screen
+                val intent = Intent(this, LoginpageActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                }
+                startActivity(intent)
+                finish()
+            } else {
+                android.util.Log.e("Settings", "❌ Failed to clear user session")
+                Toast.makeText(this, "Logout failed. Please try again.", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("Settings", "❌ Error during logout: ${e.message}")
+            Toast.makeText(this, "Logout error. Please try again.", Toast.LENGTH_SHORT).show()
+        }
     }
 }

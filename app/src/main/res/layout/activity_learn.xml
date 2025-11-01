@@ -62,16 +62,6 @@
                 android:padding="20dp"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Info Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_book"
-                    app:tint="#007AFF" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -101,7 +91,7 @@
                     android:background="@drawable/bg_card_rounded_12dp"
                     android:contentDescription="Oral Cancer Thumbnail"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/logo" />
+                    android:src="@drawable/oral" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -124,16 +114,6 @@
                 android:orientation="horizontal"
                 android:padding="20dp"
                 android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Warning Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/warning"
-                    app:tint="#FF6B35" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -164,7 +144,7 @@
                     android:background="@drawable/bg_card_rounded_12dp"
                     android:contentDescription="Risk Factors Thumbnail"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/riskfactor" />
+                    android:src="@drawable/risk" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -188,15 +168,6 @@
                 android:padding="20dp"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Check Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_check_green"
-                    app:tint="#34C759" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -227,7 +198,7 @@
                     android:background="@drawable/bg_card_rounded_12dp"
                     android:contentDescription="Prevention Thumbnail"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sheild" />
+                    android:src="@drawable/preve" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -250,16 +221,6 @@
                 android:orientation="horizontal"
                 android:padding="20dp"
                 android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Apple Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_book"
-                    app:tint="#FF3B30" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -290,7 +251,7 @@
                     android:background="@drawable/bg_card_rounded_12dp"
                     android:contentDescription="Diet Thumbnail"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_medication" />
+                    android:src="@drawable/diet" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -314,15 +275,6 @@
                 android:padding="20dp"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Fitness Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_book"
-                    app:tint="#AF52DE" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -353,7 +305,7 @@
                     android:background="@drawable/bg_card_rounded_12dp"
                     android:contentDescription="Exercise Thumbnail"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_trophy" />
+                    android:src="@drawable/exe" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -377,15 +329,6 @@
                 android:padding="20dp"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Magnifier Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_scan"
-                    app:tint="#5AC8FA" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -416,7 +359,7 @@
                     android:background="@drawable/bg_card_rounded_12dp"
                     android:contentDescription="Detection Thumbnail"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_result" />
+                    android:src="@drawable/early" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -439,16 +382,6 @@
                 android:orientation="horizontal"
                 android:padding="20dp"
                 android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_email_rounded_24dp"
-                    android:contentDescription="Megaphone Icon"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_share"
-                    app:tint="#007AFF" />
 
                 <LinearLayout
                     android:layout_width="0dp"

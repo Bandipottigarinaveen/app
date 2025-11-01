@@ -94,6 +94,7 @@
                         android:layout_marginBottom="4dp" />
 
                     <TextView
+                        android:id="@+id/healthTipText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Stay hydrated! Aim to drink 8 glasses of water today"
@@ -212,12 +213,22 @@
                         android:tint="#22C55E" />
 
                     <TextView
+                        android:id="@+id/tvRiskLevel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="View Risk Score"
+                        android:text="Risk Level: --"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="#333333"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:id="@+id/tvRiskScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Score: --"
+                        android:textSize="12sp"
+                        android:textColor="#666666"
                         android:gravity="center" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

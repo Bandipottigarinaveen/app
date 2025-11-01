@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import com.simats.echohealth.utils.ProfileManager
 
 class EditProfileActivity : AppCompatActivity() {
     
@@ -76,9 +77,13 @@ class EditProfileActivity : AppCompatActivity() {
     
     private fun loadCurrentProfileData() {
         try {
-            // Load current profile data from SharedPreferences or other storage
-            // For now, we'll use the default values from the layout
-            Log.d(TAG, "Current profile data loaded")
+            val local = ProfileManager.getProfileData(this)
+            if (local.fullName.isNotEmpty()) etFullName.setText(local.fullName)
+            if (local.username.isNotEmpty()) etUsername.setText(local.username)
+            if (local.email.isNotEmpty()) etEmail.setText(local.email)
+            if (local.dateOfBirth.isNotEmpty()) etDOB.setText(local.dateOfBirth)
+            if (local.phoneNumber.isNotEmpty()) etPhone.setText(local.phoneNumber)
+            Log.d(TAG, "Loaded profile from ProfileManager")
         } catch (e: Exception) {
             Log.e(TAG, "Error loading current profile data: ${e.message}")
             e.printStackTrace()
@@ -120,8 +125,15 @@ class EditProfileActivity : AppCompatActivity() {
                 return
             }
             
-            // Save profile data to SharedPreferences
-            saveProfileData(fullName, username, email, dob, phone)
+            // Save profile data locally via ProfileManager
+            ProfileManager.saveProfileData(
+                context = this,
+                fullName = fullName,
+                username = username,
+                email = email,
+                dateOfBirth = dob,
+                phoneNumber = phone
+            )
             
             // Show success message
             Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_LONG).show()
@@ -138,24 +150,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
     
-    private fun saveProfileData(fullName: String, username: String, email: String, dob: String, phone: String) {
-        try {
-            val sharedPref = getSharedPreferences("ProfilePrefs", MODE_PRIVATE)
-            with(sharedPref.edit()) {
-                putString("user_full_name", fullName)
-                putString("user_username", username)
-                putString("user_email", email)
-                putString("user_dob", dob)
-                putString("user_phone", phone)
-                apply()
-            }
-            
-            Log.d(TAG, "Profile data saved to SharedPreferences")
-        } catch (e: Exception) {
-            Log.e(TAG, "Error saving profile data to SharedPreferences: ${e.message}")
-            e.printStackTrace()
-        }
-    }
+    private fun saveProfileData(fullName: String, username: String, email: String, dob: String, phone: String) {}
     
     override fun onResume() {
         super.onResume()

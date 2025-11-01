@@ -6,5 +6,6 @@ data class SignupRequest (
     val password: String
 )
 data class SignupResponse(
-    val message : String
+    val message : String,
+    val token: String? = null
 )

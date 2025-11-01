@@ -13,4 +13,11 @@
     <color name="text_green">#22C55E</color>
     <color name="text_blue">#007AFF</color>
     <color name="text_red">#FF3B30</color>
+    
+    <!-- Subscription Activity Colors -->
+    <color name="primary_color">#007AFF</color>
+    <color name="gray">#6B7280</color>
+    <color name="green">#22C55E</color>
+    <color name="card_background">#F9FAFB</color>
+    <color name="card_border">#E5E7EB</color>
 </resources>

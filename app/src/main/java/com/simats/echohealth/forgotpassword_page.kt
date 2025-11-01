@@ -87,9 +87,13 @@ class ForgotPasswordPage : AppCompatActivity() {
                 response: retrofit2.Response<com.simats.echohealth.Responses.RequestOtpResponse>
             ) {
                 if (response.isSuccessful) {
+                    // Store email in SharedPreferences for OTP verification
+                    getSharedPreferences("OTPFlow", MODE_PRIVATE).edit().putString("reset_email", email).apply()
+                    
                     // Navigate to OTP verification screen
-                    val intent = Intent(this@ForgotPasswordPage, resetpasswordpage::class.java)
+                    val intent = Intent(this@ForgotPasswordPage, OtpVerification::class.java)
                     startActivity(intent)
+                    finish()
                 } else {
                     android.widget.Toast.makeText(
                         this@ForgotPasswordPage,

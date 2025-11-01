@@ -21,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
-class otpverification : AppCompatActivity() {
+class OtpVerification : AppCompatActivity() {
     companion object {
         private const val TAG = "OTPVerification"
     }
@@ -70,13 +70,20 @@ class otpverification : AppCompatActivity() {
         emailDisplay = findViewById(R.id.email_display)
         
         // Get email from SharedPreferences
-        email = getSharedPreferences("OTPFlow", MODE_PRIVATE).getString("reset_email", "") ?: ""
+        val prefs = getSharedPreferences("OTPFlow", MODE_PRIVATE)
+        email = prefs.getString("reset_email", "") ?: ""
+        
+        Log.d(TAG, "Attempting to retrieve email from SharedPreferences")
+        Log.d(TAG, "SharedPreferences name: OTPFlow")
+        Log.d(TAG, "Key: reset_email")
+        Log.d(TAG, "Retrieved email: '$email'")
         
         if (email.isEmpty()) {
             Log.e(TAG, "No email found in SharedPreferences")
+            Log.e(TAG, "Available keys in SharedPreferences: ${prefs.all.keys}")
             Toast.makeText(this, "Email not found. Please start over from the beginning.", Toast.LENGTH_LONG).show()
             // Navigate back to OTP request page
-            val intent = Intent(this, otprequestpage::class.java)
+            val intent = Intent(this, OtpRequestPage::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
@@ -115,7 +122,7 @@ class otpverification : AppCompatActivity() {
             editor.remove("reset_email")
             editor.apply()
             
-            val intent = Intent(this, otprequestpage::class.java)
+            val intent = Intent(this, OtpRequestPage::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
@@ -134,7 +141,7 @@ class otpverification : AppCompatActivity() {
         if (email.isEmpty()) {
             Toast.makeText(this, "Email not found. Please start over.", Toast.LENGTH_LONG).show()
             // Navigate back to OTP request page
-            val intent = Intent(this, otprequestpage::class.java)
+            val intent = Intent(this, OtpRequestPage::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
@@ -160,6 +167,7 @@ class otpverification : AppCompatActivity() {
                 Log.d(TAG, "OTP verification response received")
                 Log.d(TAG, "Response code: ${response.code()}")
                 Log.d(TAG, "Response body: ${response.body()}")
+                Log.d(TAG, "Response headers: ${response.headers()}")
 
                 // Reset button state
                 verifyBtn.isEnabled = true
@@ -169,18 +177,65 @@ class otpverification : AppCompatActivity() {
                     200, 201 -> {
                         if (response.body() != null) {
                             Toast.makeText(
-                                this@otpverification,
+                                this@OtpVerification,
                                 response.body()!!.message,
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            // Navigate to reset password page
-                            val intent = Intent(this@otpverification, resetpasswordpage::class.java)
-                            startActivity(intent)
-                            finish()
+                            // Save token if provided for authorized reset
+                            val responseBody = response.body()!!
+                            val token = responseBody.token
+                            
+                            Log.d(TAG, "=== TOKEN EXTRACTION DEBUG ===")
+                            Log.d(TAG, "Response body object: $responseBody")
+                            Log.d(TAG, "Token field value: $token")
+                            Log.d(TAG, "Token type: ${token?.javaClass?.simpleName}")
+                            Log.d(TAG, "Token is null: ${token == null}")
+                            Log.d(TAG, "Token is empty: ${token?.isEmpty()}")
+                            Log.d(TAG, "Token length: ${token?.length ?: 0}")
+                            
+                            val prefs = getSharedPreferences("OTPFlow", MODE_PRIVATE)
+                            
+                            if (token != null && token.isNotEmpty()) {
+                                Log.d(TAG, "✅ Valid token received, storing...")
+                                val success = prefs.edit().putString("reset_token", token).commit()
+                                Log.d(TAG, "Token stored in SharedPreferences: $success")
+                                Log.d(TAG, "Token length: ${token.length}")
+                                
+                                // Verify token was stored correctly
+                                val storedToken = prefs.getString("reset_token", null)
+                                Log.d(TAG, "Verification - Stored token: ${storedToken?.take(10)}...")
+                                Log.d(TAG, "Stored token matches original: ${storedToken == token}")
+                                
+                                Toast.makeText(
+                                    this@OtpVerification,
+                                    "OTP verified successfully! Token received.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                
+                                // Navigate to reset password page
+                                val intent = Intent(this@OtpVerification, resetpasswordpage::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Log.w(TAG, "❌ No valid token received from OTP verification response")
+                                Log.w(TAG, "Response body: $responseBody")
+                                Log.w(TAG, "Backend may not be configured to return tokens")
+                                
+                                Toast.makeText(
+                                    this@OtpVerification,
+                                    "OTP verified but no authentication token received. Password reset may fail.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                
+                                // Navigate to reset password page anyway
+                                val intent = Intent(this@OtpVerification, resetpasswordpage::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
                         } else {
                             Toast.makeText(
-                                this@otpverification,
+                                this@OtpVerification,
                                 "Verification successful but no response data",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -188,14 +243,14 @@ class otpverification : AppCompatActivity() {
                     }
                     400 -> {
                         Toast.makeText(
-                            this@otpverification,
+                            this@OtpVerification,
                             "Invalid OTP. Please check and try again.",
                             Toast.LENGTH_LONG
                         ).show()
                     }
                     401 -> {
                         Toast.makeText(
-                            this@otpverification,
+                            this@OtpVerification,
                             "OTP expired or invalid. Please request a new one.",
                             Toast.LENGTH_LONG
                         ).show()
@@ -204,14 +259,14 @@ class otpverification : AppCompatActivity() {
                         editor.remove("reset_email")
                         editor.apply()
                         
-                        val intent = Intent(this@otpverification, otprequestpage::class.java)
+                        val intent = Intent(this@OtpVerification, OtpRequestPage::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
                         finish()
                     }
                     else -> {
                         Toast.makeText(
-                            this@otpverification,
+                            this@OtpVerification,
                             "Verification failed. Please try again.",
                             Toast.LENGTH_LONG
                         ).show()
@@ -227,7 +282,7 @@ class otpverification : AppCompatActivity() {
                 verifyBtn.text = "Verify"
                 
                 Toast.makeText(
-                    this@otpverification,
+                    this@OtpVerification,
                     "Network error: ${t.localizedMessage}",
                     Toast.LENGTH_LONG
                 ).show()
@@ -267,7 +322,7 @@ class otpverification : AppCompatActivity() {
             override fun onFinish() {
                 countdownText.text = "Code expired"
                 Toast.makeText(
-                    this@otpverification,
+                    this@OtpVerification,
                     "OTP has expired. Please request a new one.",
                     Toast.LENGTH_LONG
                 ).show()
@@ -277,7 +332,7 @@ class otpverification : AppCompatActivity() {
                 editor.remove("reset_email")
                 editor.apply()
                 
-                val intent = Intent(this@otpverification, otprequestpage::class.java)
+                val intent = Intent(this@OtpVerification, OtpRequestPage::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
                 finish()
@@ -296,7 +351,7 @@ class otpverification : AppCompatActivity() {
         editor.remove("reset_email")
         editor.apply()
         
-        val intent = Intent(this, otprequestpage::class.java)
+        val intent = Intent(this, OtpRequestPage::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()

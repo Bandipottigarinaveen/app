@@ -113,7 +113,7 @@ class LearnActivity : AppCompatActivity() {
                     navigateToDetail(
                         "What is Oral Cancer?",
                         getWhatIsOralCancerContent(),
-                        R.drawable.logo
+                        R.drawable.oral
                     )
                 }
             }
@@ -125,7 +125,7 @@ class LearnActivity : AppCompatActivity() {
                     navigateToDetail(
                         "Risk Factors",
                         getRiskFactorsContent(),
-                        R.drawable.riskfactor
+                        R.drawable.risk
                     )
                 }
             }
@@ -137,7 +137,7 @@ class LearnActivity : AppCompatActivity() {
                     navigateToDetail(
                         "Prevention & Precautions",
                         getPreventionContent(),
-                        R.drawable.sheild
+                        R.drawable.preve
                     )
                 }
             }
@@ -149,7 +149,7 @@ class LearnActivity : AppCompatActivity() {
                     navigateToDetail(
                         "Diet Recommendations",
                         getDietContent(),
-                        R.drawable.ic_medication
+                        R.drawable.diet
                     )
                 }
             }
@@ -161,7 +161,7 @@ class LearnActivity : AppCompatActivity() {
                     navigateToDetail(
                         "Exercise & Physical Activity",
                         getExerciseContent(),
-                        R.drawable.ic_trophy
+                        R.drawable.exe
                     )
                 }
             }
@@ -173,7 +173,7 @@ class LearnActivity : AppCompatActivity() {
                     navigateToDetail(
                         "Early Detection Signs",
                         getEarlyDetectionContent(),
-                        R.drawable.ic_result
+                        R.drawable.early
                     )
                 }
             }

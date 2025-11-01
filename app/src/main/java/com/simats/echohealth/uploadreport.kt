@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,6 +31,7 @@ class UploadReport : AppCompatActivity() {
     private lateinit var chooseFileButton: CardView
     private lateinit var continueButton: Button
     private lateinit var reportPreviewText: TextView
+    private lateinit var imagePreview: ImageView
     
     private var selectedImageUri: Uri? = null
     private var selectedFilePath: String? = null
@@ -38,6 +40,7 @@ class UploadReport : AppCompatActivity() {
         private const val CAMERA_REQUEST_CODE = 1001
         private const val CAMERA_PERMISSION_REQUEST_CODE = 1002
         private const val STORAGE_PERMISSION_REQUEST_CODE = 1003
+        private const val MEDIA_PERMISSION_REQUEST_CODE = 1004
     }
     
     // Camera launcher removed - using simple onActivityResult instead
@@ -46,10 +49,12 @@ class UploadReport : AppCompatActivity() {
     private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let { selectedUri ->
             selectedImageUri = selectedUri
-            selectedFilePath = selectedUri.toString()
+            // For content URIs, do NOT treat the URI string as a filesystem path
+            selectedFilePath = null
+            displayImagePreview(selectedUri)
             updateReportPreview("File selected successfully")
             enableContinueButton()
-            Log.d("UploadReport", "File selected: $selectedFilePath")
+            Log.d("UploadReport", "File selected URI: ${selectedUri}")
         } ?: run {
             Log.d("UploadReport", "No file selected")
         }
@@ -93,11 +98,12 @@ class UploadReport : AppCompatActivity() {
         try {
             Log.d("UploadReport", "Initializing views...")
             
-            backButton = findViewById(R.id.backButton)
-            takePhotoButton = findViewById(R.id.takePhotoButton)
-            chooseFileButton = findViewById(R.id.chooseFileButton)
-            continueButton = findViewById(R.id.continueButton)
-            reportPreviewText = findViewById(R.id.reportPreviewText)
+            backButton = findViewById<ImageView>(R.id.backButton)
+            takePhotoButton = findViewById<CardView>(R.id.takePhotoButton)
+            chooseFileButton = findViewById<CardView>(R.id.chooseFileButton)
+            continueButton = findViewById<Button>(R.id.continueButton)
+            reportPreviewText = findViewById<TextView>(R.id.reportPreviewText)
+            imagePreview = findViewById<ImageView>(R.id.imagePreview)
             
             Log.d("UploadReport", "Views initialized successfully")
             Log.d("UploadReport", "Back button: ${if (backButton != null) "FOUND" else "NOT FOUND"}")
@@ -185,10 +191,7 @@ class UploadReport : AppCompatActivity() {
                 continueButton.isEnabled = false
                 continueButton.alpha = 0.5f
                 
-                // For testing - enable the button immediately
-                // TODO: Remove this after testing
-                continueButton.isEnabled = true
-                continueButton.alpha = 1.0f
+                // Keep disabled until a file is chosen/captured
                 
                 Log.d("UploadReport", "Continue button setup successful")
                 Log.d("UploadReport", "Continue button enabled: ${continueButton.isEnabled}")
@@ -221,14 +224,24 @@ class UploadReport : AppCompatActivity() {
     
     private fun checkStoragePermissionAndPickFile() {
         try {
-            // Check if storage permission is granted
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                Log.d("UploadReport", "Storage permission already granted")
-                pickFile()
+            // For Android 13+ (API 33+), use media permissions
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("UploadReport", "Media permission already granted")
+                    pickFile()
+                } else {
+                    Log.d("UploadReport", "Requesting media permission")
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_MEDIA_IMAGES), MEDIA_PERMISSION_REQUEST_CODE)
+                }
             } else {
-                Log.d("UploadReport", "Requesting storage permission")
-                // Request storage permission
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION_REQUEST_CODE)
+                // For older Android versions, use storage permission
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("UploadReport", "Storage permission already granted")
+                    pickFile()
+                } else {
+                    Log.d("UploadReport", "Requesting storage permission")
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION_REQUEST_CODE)
+                }
             }
         } catch (e: Exception) {
             Log.e("UploadReport", "Error checking storage permission: ${e.message}")
@@ -264,6 +277,7 @@ class UploadReport : AppCompatActivity() {
         try {
             Log.d("UploadReport", "Picking file...")
             
+            // Use MIME type that supports images and PDFs
             filePickerLauncher.launch("*/*")
             
             Log.d("UploadReport", "File picker launched successfully")
@@ -271,6 +285,20 @@ class UploadReport : AppCompatActivity() {
             Log.e("UploadReport", "Error picking file: ${e.message}")
             e.printStackTrace()
             Toast.makeText(this, "Error opening file picker", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun displayImagePreview(uri: Uri) {
+        try {
+            if (imagePreview != null) {
+                imagePreview.setImageURI(uri)
+                imagePreview.visibility = View.VISIBLE
+                reportPreviewText.visibility = View.GONE
+                Log.d("UploadReport", "Image preview displayed: $uri")
+            }
+        } catch (e: Exception) {
+            Log.e("UploadReport", "Error displaying image preview: ${e.message}")
+            e.printStackTrace()
         }
     }
     
@@ -307,7 +335,7 @@ class UploadReport : AppCompatActivity() {
         try {
             Log.d("UploadReport", "Processing upload...")
             
-            if (selectedFilePath != null) {
+            if (selectedImageUri != null || (selectedFilePath != null && selectedFilePath!!.startsWith("/"))) {
                 // Here you would typically upload the file to your server
                 Toast.makeText(this, "Uploading report...", Toast.LENGTH_SHORT).show()
                 
@@ -320,6 +348,23 @@ class UploadReport : AppCompatActivity() {
                     try {
                         Log.d("UploadReport", "Creating intent for retakeupload")
                         val intent = Intent(this, com.simats.echohealth.RetakeUpload::class.java)
+                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        
+                        // Pass image data to RetakeUpload
+                        selectedImageUri?.let { 
+                            intent.putExtra("imageUri", it.toString())
+                            Log.d("UploadReport", "Passing image URI: ${it.toString()}")
+                        }
+                        selectedFilePath?.let { path ->
+                            // Only pass a real filesystem path
+                            if (path.startsWith("/")) {
+                                intent.putExtra("imagePath", path)
+                                Log.d("UploadReport", "Passing filesystem path: $path")
+                            } else {
+                                Log.d("UploadReport", "Skipping non-filesystem path: $path")
+                            }
+                        }
+                        
                         Log.d("UploadReport", "Intent created successfully")
                         
                         Log.d("UploadReport", "Starting retakeupload activity")
@@ -336,7 +381,7 @@ class UploadReport : AppCompatActivity() {
                 
             } else {
                 Toast.makeText(this, "Please select a file first", Toast.LENGTH_SHORT).show()
-                Log.d("UploadReport", "No file selected for upload")
+                Log.d("UploadReport", "No file selected for upload - imageUri=${selectedImageUri} path=${selectedFilePath}")
             }
         } catch (e: Exception) {
             Log.e("UploadReport", "Error processing upload: ${e.message}")
@@ -367,6 +412,15 @@ class UploadReport : AppCompatActivity() {
                     Toast.makeText(this, "Storage permission is required to select files", Toast.LENGTH_LONG).show()
                 }
             }
+            MEDIA_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("UploadReport", "Media permission granted")
+                    pickFile()
+                } else {
+                    Log.d("UploadReport", "Media permission denied")
+                    Toast.makeText(this, "Media permission is required to select files", Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
     
@@ -391,6 +445,7 @@ class UploadReport : AppCompatActivity() {
                         selectedImageUri = android.net.Uri.fromFile(imageFile)
                         selectedFilePath = selectedImageUri.toString()
                         
+                        displayImagePreview(selectedImageUri!!)
                         updateReportPreview("Photo captured successfully")
                         enableContinueButton()
                         

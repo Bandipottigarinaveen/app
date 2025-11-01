@@ -10,8 +10,170 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.LinearLayout
+import android.os.Handler
+import android.os.Looper
+import android.net.Uri
+import com.simats.echohealth.utils.ProfileManager
+import java.io.File
+import android.view.View
+import android.view.ViewOutlineProvider
+import android.graphics.Outline
 
 class Dashboard : AppCompatActivity() {
+    private val tips = listOf(
+        "Stay hydrated! Aim for 8 glasses of water today",
+        "Brush and floss daily to maintain good oral hygiene",
+        "Avoid tobacco and limit alcohol for better oral health",
+        "Schedule regular dental checkups every 6 months",
+        "Include fruits and vegetables rich in antioxidants"
+    )
+    private var tipIndex = 0
+    private val tipHandler = Handler(Looper.getMainLooper())
+    private lateinit var healthTipText: TextView
+    private val tipRunnable = object : Runnable {
+        override fun run() {
+            if (::healthTipText.isInitialized) {
+                tipIndex = (tipIndex + 1) % tips.size
+                healthTipText.text = tips[tipIndex]
+            }
+            tipHandler.postDelayed(this, 5000)
+        }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh recent activity whenever returning to dashboard
+        populateRecentActivity()
+        // Refresh profile icon from local profile
+        loadProfileIcon()
+    }
+
+    private fun populateRecentActivity() {
+        try {
+            val container = findViewById<LinearLayout>(R.id.recentActivityContainer)
+            container?.let {
+                it.removeAllViews()
+                val items = ActivityLogStore.getActivities(this, limit = 10)
+                if (items.isEmpty()) {
+                    val empty = android.widget.TextView(this)
+                    empty.text = "No recent activity yet"
+                    empty.setTextColor(android.graphics.Color.parseColor("#666666"))
+                    empty.textSize = 14f
+                    it.addView(empty)
+                    return
+                }
+                var lastHeader: String? = null
+                for (item in items) {
+                    val header = dayLabelFor(item.timestampMillis)
+                    if (header != lastHeader) {
+                        val headerView = android.widget.TextView(this)
+                        headerView.text = header
+                        headerView.setTextColor(android.graphics.Color.parseColor("#666666"))
+                        headerView.textSize = 12f
+                        headerView.setPadding(0, if (lastHeader == null) 0 else dp(8), 0, dp(4))
+                        it.addView(headerView)
+                        lastHeader = header
+                    }
+                    val row = android.widget.LinearLayout(this)
+                    row.orientation = android.widget.LinearLayout.VERTICAL
+                    row.setPadding(0, 0, 0, dp(12))
+
+                    val titleView = android.widget.TextView(this)
+                    titleView.text = item.title
+                    titleView.setTextColor(android.graphics.Color.parseColor("#333333"))
+                    titleView.textSize = 16f
+                    titleView.setTypeface(titleView.typeface, android.graphics.Typeface.BOLD)
+
+                    // Create a horizontal layout for description and risk level
+                    val descRow = android.widget.LinearLayout(this)
+                    descRow.orientation = android.widget.LinearLayout.HORIZONTAL
+                    descRow.layoutParams = android.widget.LinearLayout.LayoutParams(
+                        android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+                        android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+
+                    val descView = android.widget.TextView(this)
+                    descView.text = item.description
+                    descView.setTextColor(android.graphics.Color.parseColor("#666666"))
+                    descView.textSize = 14f
+                    descView.layoutParams = android.widget.LinearLayout.LayoutParams(
+                        0,
+                        android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+                        1f
+                    )
+
+                    // Add risk level badge if available
+                    if (!item.riskLevel.isNullOrBlank()) {
+                        val riskBadge = android.widget.TextView(this)
+                        val riskText = when (item.riskLevel.lowercase()) {
+                            "high", "high risk" -> "HIGH RISK"
+                            "medium", "medium risk", "moderate" -> "MEDIUM RISK"
+                            "low", "low risk" -> "LOW RISK"
+                            "very low", "very low risk" -> "VERY LOW RISK"
+                            else -> item.riskLevel.uppercase()
+                        }
+                        
+                        val riskColor = when (item.riskLevel.lowercase()) {
+                            "high", "high risk" -> android.graphics.Color.parseColor("#D93025")
+                            "medium", "medium risk", "moderate" -> android.graphics.Color.parseColor("#F9A825")
+                            "low", "low risk" -> android.graphics.Color.parseColor("#0BAA5F")
+                            "very low", "very low risk" -> android.graphics.Color.parseColor("#0BAA5F")
+                            else -> android.graphics.Color.parseColor("#666666")
+                        }
+                        
+                        riskBadge.text = riskText
+                        riskBadge.setTextColor(riskColor)
+                        riskBadge.textSize = 12f
+                        riskBadge.setTypeface(riskBadge.typeface, android.graphics.Typeface.BOLD)
+                        riskBadge.setPadding(dp(8), dp(2), dp(8), dp(2))
+                        riskBadge.background = android.graphics.drawable.GradientDrawable().apply {
+                            setColor(android.graphics.Color.parseColor("#F5F5F5"))
+                            cornerRadius = dp(12).toFloat()
+                        }
+                        
+                        descRow.addView(riskBadge)
+                    }
+
+                    descRow.addView(descView)
+                    row.addView(titleView)
+                    row.addView(descRow)
+                    it.addView(row)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Dashboard", "Failed to populate recent activity: ${e.message}")
+        }
+    }
+
+    private fun dayLabelFor(timestampMillis: Long): String {
+        try {
+            val now = java.util.Calendar.getInstance()
+            val cal = java.util.Calendar.getInstance().apply { timeInMillis = timestampMillis }
+
+            // Normalize to midnight for diff
+            fun trunc(c: java.util.Calendar) {
+                c.set(java.util.Calendar.HOUR_OF_DAY, 0)
+                c.set(java.util.Calendar.MINUTE, 0)
+                c.set(java.util.Calendar.SECOND, 0)
+                c.set(java.util.Calendar.MILLISECOND, 0)
+            }
+            trunc(now)
+            trunc(cal)
+
+            val diffDays = ((now.timeInMillis - cal.timeInMillis) / (24L * 60L * 60L * 1000L)).toInt()
+            return when (diffDays) {
+                0 -> "Today"
+                1 -> "Yesterday"
+                else -> "$diffDays days ago"
+            }
+        } catch (_: Exception) {
+            return ""
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("Dashboard", "Dashboard onCreate started")
@@ -50,7 +212,19 @@ class Dashboard : AppCompatActivity() {
         
         // Verify UI elements
         verifyUIElements()
+
+        // Start rotating daily health tips
+        healthTipText = findViewById(R.id.healthTipText)
+        if (healthTipText != null) {
+            healthTipText.text = tips[tipIndex]
+            tipHandler.postDelayed(tipRunnable, 5000)
+        }
         
+        // Initial recent activity load
+        populateRecentActivity()
+        // Initial profile icon load
+        loadProfileIcon()
+
         Log.d("Dashboard", "Dashboard onCreate completed successfully")
     }
     
@@ -78,6 +252,62 @@ class Dashboard : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("Dashboard", "Error verifying UI elements: ${e.message}")
         }
+    }
+
+    private fun loadProfileIcon() {
+        try {
+            val icon = findViewById<ImageView>(R.id.userProfileIcon)
+            if (icon == null) return
+            makeCircular(icon)
+            val local = ProfileManager.getProfileData(this)
+            val photoStr = local.photo
+            if (photoStr.isNullOrBlank()) return
+            try {
+                if (photoStr.startsWith("content:") || photoStr.startsWith("file:")) {
+                    icon.setImageURI(Uri.parse(photoStr))
+                } else {
+                    val file = File(photoStr)
+                    if (file.exists()) {
+                        icon.setImageURI(Uri.fromFile(file))
+                    }
+                }
+            } catch (_: Exception) {}
+        } catch (e: Exception) {
+            Log.e("Dashboard", "Failed to load profile icon: ${e.message}")
+        }
+    }
+
+    private fun makeCircular(imageView: ImageView) {
+        try {
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            imageView.clipToOutline = true
+
+            val applyOutline: (View) -> Unit = { view ->
+                val w = view.width
+                val h = view.height
+                if (w > 0 && h > 0) {
+                    val size = kotlin.math.min(w, h)
+                    // Force square to avoid oval clipping
+                    val lp = view.layoutParams
+                    if (lp != null && (lp.width != size || lp.height != size)) {
+                        lp.width = size
+                        lp.height = size
+                        view.layoutParams = lp
+                    }
+                    view.outlineProvider = object : ViewOutlineProvider() {
+                        override fun getOutline(v: View, outline: Outline) {
+                            outline.setOval(0, 0, v.width, v.height)
+                        }
+                    }
+                    view.clipToOutline = true
+                    view.invalidateOutline()
+                }
+            }
+
+            // Apply after initial layout and on future layout changes
+            imageView.addOnLayoutChangeListener { v, _, _, _, _, _, _, _, _ -> applyOutline(v) }
+            imageView.post { applyOutline(imageView) }
+        } catch (_: Exception) {}
     }
     
     private fun setupProfileNavigation() {
@@ -178,25 +408,24 @@ class Dashboard : AppCompatActivity() {
             Log.d("Dashboard", "View Risk Score card found: ${viewRiskScoreCard != null}")
             
             if (viewRiskScoreCard != null) {
-                viewRiskScoreCard.setOnClickListener {
-                    Log.d("Dashboard", "View Risk Score Card clicked - navigating to Results")
-                    try {
-                        Log.d("Dashboard", "Creating intent for Results")
-                        val intent = Intent(this, com.simats.echohealth.Results::class.java)
-                        Log.d("Dashboard", "Intent created successfully")
-                        
-                        Log.d("Dashboard", "Starting Results activity")
-                        startActivity(intent)
-                        Log.d("Dashboard", "Successfully navigated to Results")
-                        
-                    } catch (e: Exception) {
-                        Log.e("Dashboard", "Error navigating to Results: ${e.message}")
-                        Log.e("Dashboard", "Stack trace: ${e.stackTraceToString()}")
-                        e.printStackTrace()
-                    }
+                // Populate risk score and level directly on dashboard
+                try {
+                    val tvRiskLevel = findViewById<android.widget.TextView>(R.id.tvRiskLevel)
+                    val tvRiskScore = findViewById<android.widget.TextView>(R.id.tvRiskScore)
+                    val prefs = getSharedPreferences("LastResult", MODE_PRIVATE)
+                    val riskScore = prefs.getString("riskScore", null)
+                    val riskLevel = prefs.getString("riskLevel", null)
+
+                    tvRiskLevel?.text = "Risk Level: ${riskLevel ?: "--"}"
+                    tvRiskScore?.text = "Score: ${riskScore ?: "--"}"
+                } catch (e: Exception) {
+                    Log.e("Dashboard", "Error populating risk score on dashboard: ${e.message}")
                 }
-                
-                Log.d("Dashboard", "View Risk Score card navigation setup successful")
+
+                // Remove navigation on click
+                viewRiskScoreCard.setOnClickListener { /* no-op */ }
+
+                Log.d("Dashboard", "View Risk Score card now displays data without navigation")
             } else {
                 Log.e("Dashboard", "View Risk Score card not found")
             }
@@ -337,25 +566,40 @@ class Dashboard : AppCompatActivity() {
             // Setup Result navigation
             if (resultNavItem != null) {
                 resultNavItem.setOnClickListener {
-                    Log.d("Dashboard", "Result button clicked - navigating to Results")
+                    Log.d("Dashboard", "Result button clicked - navigating to Results with last data")
                     setActiveNavigationItem(resultNavItem)
-                    
                     try {
-                        Log.d("Dashboard", "Creating intent for Results")
+                        val prefs = getSharedPreferences("LastResult", MODE_PRIVATE)
+                        val riskScore = prefs.getString("riskScore", null)
+                        val riskLevel = prefs.getString("riskLevel", null)
+                        val probability = prefs.getFloat("probability", -1f)
+                        val assessmentType = prefs.getString("assessmentType", "Assessment Results")
+                        val isApiResult = prefs.getBoolean("isApiResult", false)
+                        val recs = prefs.getString("recommendations", "")
+                        val warns = prefs.getString("warningSigns", "")
+                        val steps = prefs.getString("nextSteps", "")
+
                         val intent = Intent(this, com.simats.echohealth.Results::class.java)
-                        Log.d("Dashboard", "Intent created successfully")
-                        
-                        Log.d("Dashboard", "Starting Results activity")
+                        assessmentType?.let { intent.putExtra("assessmentType", it) }
+                        intent.putExtra("isApiResult", isApiResult)
+                        riskScore?.let { intent.putExtra("riskScore", it) }
+                        riskLevel?.let { intent.putExtra("riskLevel", it) }
+                        if (probability >= 0f) intent.putExtra("probability", probability.toDouble())
+                        if (!recs.isNullOrEmpty()) intent.putExtra("recommendations", recs.split("||").toTypedArray())
+                        if (!warns.isNullOrEmpty()) intent.putExtra("warningSigns", warns.split("||").toTypedArray())
+                        if (!steps.isNullOrEmpty()) intent.putExtra("nextSteps", steps.split("||").toTypedArray())
+                        intent.putExtra("useProvidedScore", true)
+
                         startActivity(intent)
-                        Log.d("Dashboard", "Successfully navigated to Results")
-                        
                     } catch (e: Exception) {
-                        Log.e("Dashboard", "Error navigating to Results: ${e.message}")
-                        Log.e("Dashboard", "Stack trace: ${e.stackTraceToString()}")
+                        Log.e("Dashboard", "Error navigating to Results with last data: ${e.message}")
                         e.printStackTrace()
                     }
                 }
             }
+
+            // Populate Recent Activity dynamically (also called in onResume)
+            populateRecentActivity()
             
             // Setup Settings navigation
             if (settingsNavItem != null) {
@@ -472,18 +716,17 @@ class Dashboard : AppCompatActivity() {
         }
     }
     
-    override fun onResume() {
-        super.onResume()
-        Log.d("Dashboard", "Dashboard onResume called")
-    }
+    // Removed duplicate onResume; onResume at top handles refreshing
     
     override fun onPause() {
         super.onPause()
         Log.d("Dashboard", "Dashboard onPause called")
+        tipHandler.removeCallbacks(tipRunnable)
     }
     
     override fun onDestroy() {
         super.onDestroy()
         Log.d("Dashboard", "Dashboard onDestroy called")
+        tipHandler.removeCallbacks(tipRunnable)
     }
 }

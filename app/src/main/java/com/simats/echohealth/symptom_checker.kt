@@ -11,6 +11,16 @@ import android.widget.Toast
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.simats.echohealth.Responses.SymptomCheckRequest
+import com.simats.echohealth.Responses.SymptomCheckResponse
+import com.simats.echohealth.Responses.SymptomFeatures
+import com.simats.echohealth.Retrofit.ApiService
+import com.simats.echohealth.Retrofit.NetworkUtils
+import com.simats.echohealth.Retrofit.RetrofitClient
+import java.util.Locale
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SymptomChecker : AppCompatActivity() {
     
@@ -201,20 +211,128 @@ class SymptomChecker : AppCompatActivity() {
                 return
             }
             
-            // Calculate risk score
-            val riskScore = calculateRiskScore()
-            val riskLevel = determineRiskLevel(riskScore)
-            val recommendations = generateRecommendations(riskScore)
+            // Check network connectivity
+            if (!NetworkUtils.isNetworkAvailable(this)) {
+                Toast.makeText(this, "No internet connection. Using offline assessment.", Toast.LENGTH_SHORT).show()
+                performOfflineAssessment()
+                return
+            }
             
-            Log.d(TAG, "Risk assessment completed - Score: $riskScore, Level: $riskLevel")
+            // Disable button to prevent multiple submissions
+            analyzeButton.isEnabled = false
+            analyzeButton.text = "Analyzing..."
             
-            // Navigate to results with assessment data
-            navigateToResults(riskScore, riskLevel, recommendations)
+            // Create API request
+            val request = createSymptomCheckRequest()
+            Log.d(TAG, "Symptom check request: $request")
+            
+            // Try with auth first, fallback to no auth
+            val api = RetrofitClient.getClient().create(ApiService::class.java)
+            val token = com.simats.echohealth.auth.AuthManager.getAuthToken(this)
+            val call = if (!token.isNullOrBlank()) {
+                Log.d(TAG, "Using authenticated API call")
+                api.symptomCheck("Bearer $token", request)
+            } else {
+                Log.d(TAG, "No auth token, trying without authentication")
+                api.symptomCheck(request)
+            }
+            
+            call.enqueue(object : Callback<SymptomCheckResponse> {
+                override fun onResponse(call: Call<SymptomCheckResponse>, response: Response<SymptomCheckResponse>) {
+                    Log.d(TAG, "Symptom check response received")
+                    Log.d(TAG, "Response code: ${response.code()}")
+                    Log.d(TAG, "Response body: ${response.body()}")
+                    
+                    // Re-enable button
+                    analyzeButton.isEnabled = true
+                    analyzeButton.text = "Analyze"
+                    
+                    if (response.isSuccessful && response.body() != null) {
+                        val apiResponse = response.body()!!
+                        Log.d(TAG, "API assessment completed - Score: ${apiResponse.risk_score}, Level: ${apiResponse.risk_level}")
+
+                        // Map varying backend fields to a consistent intent contract
+                        val probability0to1: Double? = when {
+                            apiResponse.probability != null -> apiResponse.probability
+                            apiResponse.prediction_percentage != null -> (apiResponse.prediction_percentage / 100.0).coerceIn(0.0, 1.0)
+                            else -> null
+                        }
+                        val riskScoreForDisplay: String = when {
+                            apiResponse.risk_score != null -> apiResponse.risk_score.toString()
+                            probability0to1 != null -> String.format(Locale.getDefault(), "%.1f", (probability0to1 * 10.0))
+                            !apiResponse.risk_level.isNullOrBlank() -> when (apiResponse.risk_level.trim().lowercase(Locale.getDefault())) {
+                                "high", "high risk" -> "8.5"
+                                "moderate", "medium", "moderate risk", "medium risk" -> "5.5"
+                                "low", "low risk" -> "2.5"
+                                "very low", "very low risk" -> "1.0"
+                                else -> "N/A"
+                            }
+                            else -> "N/A"
+                        }
+                        val riskLevelForDisplay: String = apiResponse.risk_level ?: run {
+                            val pct = when {
+                                apiResponse.probability != null -> apiResponse.probability * 100.0
+                                apiResponse.prediction_percentage != null -> apiResponse.prediction_percentage
+                                else -> null
+                            }
+                            when {
+                                pct == null -> "Unknown"
+                                pct >= 80 -> "High Risk"
+                                pct >= 40 -> "Moderate Risk"
+                                pct >= 10 -> "Low Risk"
+                                else -> "Very Low Risk"
+                            }
+                        }
+
+                        val intent = Intent(this@SymptomChecker, Results::class.java).apply {
+                            putExtra("riskScore", riskScoreForDisplay)
+                            putExtra("riskLevel", riskLevelForDisplay)
+                            probability0to1?.let { putExtra("probability", it) }
+                            putExtra("recommendations", (apiResponse.recommendations ?: emptyList()).toTypedArray())
+                            putExtra("warningSigns", (apiResponse.warning_signs ?: emptyList()).toTypedArray())
+                            putExtra("nextSteps", (apiResponse.next_steps ?: emptyList()).toTypedArray())
+                            putExtra("message", apiResponse.message ?: "")
+                            putExtra("assessmentType", "AI-Powered Oral Cancer Risk Assessment")
+                            putExtra("isApiResult", true)
+                        }
+                        startActivity(intent)
+                    } else {
+                        Log.e(TAG, "API call failed: ${response.code()}")
+                        val errorBody = try { response.errorBody()?.string() } catch (e: Exception) { "Unknown error" }
+                        Log.e(TAG, "Error details: $errorBody")
+                        if (response.code() == 401) {
+                            Toast.makeText(this@SymptomChecker, "Session expired. Please login again.", Toast.LENGTH_LONG).show()
+                            // Re-enable button and do not fallback to offline in auth error
+                            analyzeButton.isEnabled = true
+                            analyzeButton.text = "Analyze"
+                            return
+                        }
+                        
+                        Toast.makeText(this@SymptomChecker, "API assessment failed. Using offline assessment.", Toast.LENGTH_LONG).show()
+                        performOfflineAssessment()
+                    }
+                }
+                
+                override fun onFailure(call: Call<SymptomCheckResponse>, t: Throwable) {
+                    Log.e(TAG, "Symptom check network failure", t)
+                    
+                    // Re-enable button
+                    analyzeButton.isEnabled = true
+                    analyzeButton.text = "Analyze"
+                    
+                    Toast.makeText(this@SymptomChecker, "Network error. Using offline assessment.", Toast.LENGTH_LONG).show()
+                    performOfflineAssessment()
+                }
+            })
             
         } catch (e: Exception) {
             Log.e(TAG, "Error performing risk assessment: ${e.message}")
             e.printStackTrace()
             Toast.makeText(this, "Error performing risk assessment", Toast.LENGTH_SHORT).show()
+            
+            // Re-enable button
+            analyzeButton.isEnabled = true
+            analyzeButton.text = "Analyze"
         }
     }
     
@@ -396,6 +514,91 @@ class SymptomChecker : AppCompatActivity() {
         return recommendations
     }
     
+    private fun createSymptomCheckRequest(): SymptomCheckRequest {
+        val ageText = editTextAge.text.toString().trim()
+        val age = ageText.toIntOrNull() ?: 0
+        
+        val gender = when {
+            radioGenderMale.isChecked -> "Male"
+            radioGenderFemale.isChecked -> "Female"
+            radioGenderOther.isChecked -> "Other"
+            else -> "Unknown"
+        }
+        
+        fun yn(checked: Boolean): Int = if (checked) 1 else 0
+        
+        val features = SymptomFeatures(
+            Age = age,
+            Gender = gender,
+            Tobacco_Use = yn(radioTobaccoYes.isChecked),
+            Alcohol_Consumption = yn(radioAlcoholYes.isChecked),
+            HPV_Infection = yn(radioHPVYes.isChecked),
+            Betel_Quid_Use = yn(radioBetelYes.isChecked),
+            Poor_Oral_Hygiene = yn(radioHygieneYes.isChecked),
+            Oral_Lesions = yn(radioLesionsYes.isChecked),
+            Unexplained_Bleeding = yn(radioBleedingYes.isChecked),
+            Difficulty_Swallowing = yn(radioSwallowingYes.isChecked),
+            White_or_Red_Patches_in_Mouth = yn(radioPatchesYes.isChecked),
+            Oral_Cancer_Diagnosis = yn(radioDiagnosisYes.isChecked)
+        )
+        
+        return SymptomCheckRequest(
+            mode = "symptoms",
+            features = features
+        )
+    }
+    
+    private fun performOfflineAssessment() {
+        try {
+            Log.d(TAG, "Performing offline risk assessment")
+            
+            // Calculate risk score using local logic
+            val riskScore = calculateRiskScore()
+            val riskLevel = determineRiskLevel(riskScore)
+            val recommendations = generateRecommendations(riskScore)
+            
+            Log.d(TAG, "Offline assessment completed - Score: $riskScore, Level: $riskLevel")
+            
+            // Navigate to results with offline data
+            navigateToResults(riskScore, riskLevel, recommendations)
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Error performing offline assessment: ${e.message}")
+            e.printStackTrace()
+            Toast.makeText(this, "Error performing assessment", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun navigateToResultsFromAPI(apiResponse: SymptomCheckResponse) {
+        try {
+            Log.d(TAG, "Navigating to results with API data")
+            
+            val intent = Intent(this, Results::class.java).apply {
+                putExtra("riskScore", apiResponse.risk_score)
+                putExtra("riskLevel", apiResponse.risk_level)
+                putExtra("probability", apiResponse.probability)
+                putExtra("recommendations", (apiResponse.recommendations ?: emptyList()).toTypedArray())
+                putExtra("warningSigns", (apiResponse.warning_signs ?: emptyList()).toTypedArray())
+                putExtra("nextSteps", (apiResponse.next_steps ?: emptyList()).toTypedArray())
+                putExtra("message", apiResponse.message)
+                putExtra("assessmentType", "AI-Powered Oral Cancer Risk Assessment")
+                putExtra("mode", "symptoms")
+                putExtra("isApiResult", true)
+            }
+            
+            // Results page will handle saving to both SharedPreferences and database
+            Log.d(TAG, "API symptoms entry completed - Results page will save data")
+
+            startActivity(intent)
+            Log.d(TAG, "Successfully navigated to results with API data")
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Error navigating to results: ${e.message}")
+            e.printStackTrace()
+            Toast.makeText(this, "Error displaying results", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
     private fun navigateToResults(riskScore: Int, riskLevel: String, recommendations: List<String>) {
         try {
             Log.d(TAG, "Navigating to results with score: $riskScore, level: $riskLevel")
@@ -404,9 +607,13 @@ class SymptomChecker : AppCompatActivity() {
                 putExtra("riskScore", riskScore)
                 putExtra("riskLevel", riskLevel)
                 putExtra("recommendations", recommendations.toTypedArray())
-                putExtra("assessmentType", "Oral Cancer Risk Assessment")
+                putExtra("assessmentType", "Offline Oral Cancer Risk Assessment")
+                putExtra("isApiResult", false)
             }
             
+            // Results page will handle saving to both SharedPreferences and database
+            Log.d(TAG, "Offline symptoms entry completed - Results page will save data")
+
             startActivity(intent)
             Log.d(TAG, "Successfully navigated to results")
             

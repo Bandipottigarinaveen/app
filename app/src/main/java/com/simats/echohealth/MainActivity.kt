@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         // Find the Get Started button
         val getStartedButton = findViewById<Button>(R.id.getStartedBtn)
 
-        // Set click listener to navigate to LoginPageActivity
+        // Set click listener to navigate to SubscriptionActivity
         getStartedButton.setOnClickListener {
-            val intent = Intent(this, LoginpageActivity::class.java)
+            val intent = Intent(this, SubscriptionActivity::class.java)
             startActivity(intent)
         }
 

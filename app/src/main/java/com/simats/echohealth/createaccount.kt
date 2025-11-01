@@ -20,8 +20,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.simats.echohealth.Responses.SignupRequest
 import com.simats.echohealth.Responses.SignupResponse
+import com.simats.echohealth.Responses.LoginRequest
+import com.simats.echohealth.Responses.LoginResponse
 import com.simats.echohealth.Retrofit.ApiService
 import com.simats.echohealth.Retrofit.RetrofitClient
+import com.simats.echohealth.auth.AuthManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -222,6 +225,27 @@ class CreateAccount : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val body = response.body()
                         Toast.makeText(this@CreateAccount, body?.message ?: "Signed up successfully", Toast.LENGTH_SHORT).show()
+                        
+                        // Store auth token if provided by backend
+                        body?.token?.let { token ->
+                            val sessionStored = com.simats.echohealth.auth.AuthManager.storeUserSession(
+                                context = this@CreateAccount,
+                                token = token,
+                                userId = null,
+                                email = email
+                            )
+                            if (sessionStored) {
+                                Log.d(TAG, "✅ User session stored after registration")
+                            } else {
+                                Log.e(TAG, "❌ Failed to store user session after registration")
+                            }
+                        } ?: run {
+                            // No token from signup → auto-login with same credentials
+                            Log.d(TAG, "No token in signup response; attempting auto-login")
+                            autoLoginAndProceed(email, password, fullName)
+                            return
+                        }
+                        
                         saveUserDataLocally(fullName, email)
                         val intent = Intent(this@CreateAccount, Dashboard::class.java).apply {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -251,6 +275,64 @@ class CreateAccount : AppCompatActivity() {
         }
     }
     
+    private fun autoLoginAndProceed(email: String, password: String, fullName: String) {
+        try {
+            val retrofit = RetrofitClient.getClient()
+            val api = retrofit.create(ApiService::class.java)
+            val loginReq = LoginRequest(email = email, password = password)
+
+            api.login(loginReq).enqueue(object : Callback<LoginResponse> {
+                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        var authToken: String? = body?.token
+                        if (authToken.isNullOrBlank()) {
+                            val authHeader = response.headers()["Authorization"]
+                            authToken = authHeader
+                                ?.removePrefix("Bearer ")
+                                ?.removePrefix("Token ")
+                                ?.trim()
+                                ?.takeIf { !it.isNullOrBlank() }
+                        }
+
+                        if (!authToken.isNullOrBlank()) {
+                            val stored = AuthManager.storeUserSession(
+                                context = this@CreateAccount,
+                                token = authToken!!,
+                                userId = null,
+                                email = email
+                            )
+                            if (!stored) {
+                                Log.e(TAG, "❌ Auto-login: failed to store session")
+                            }
+                            saveUserDataLocally(fullName, email)
+                            val intent = Intent(this@CreateAccount, Dashboard::class.java).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            }
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this@CreateAccount, "Auto-login failed: missing token", Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Toast.makeText(this@CreateAccount, "Auto-login failed: ${response.code()}", Toast.LENGTH_LONG).show()
+                    }
+                    signUpButton.isEnabled = true
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Log.e(TAG, "Auto-login API failure", t)
+                    Toast.makeText(this@CreateAccount, "Auto-login error: ${t.localizedMessage}", Toast.LENGTH_LONG).show()
+                    signUpButton.isEnabled = true
+                }
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "Auto-login exception", e)
+            Toast.makeText(this@CreateAccount, "Auto-login exception: ${e.message}", Toast.LENGTH_LONG).show()
+            signUpButton.isEnabled = true
+        }
+    }
+
     private fun saveUserDataLocally(fullName: String, email: String) {
         try {
             // Save to SharedPreferences (you can implement your own Session management)

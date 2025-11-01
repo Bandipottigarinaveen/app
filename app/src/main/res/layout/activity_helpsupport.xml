@@ -54,14 +54,28 @@
                 android:src="@drawable/ic_scan"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="How to use the scanning feature?"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="How to use the scanning feature?"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Position your device 15–20cm from the area. Use good lighting and keep the camera steady."
+                    android:textSize="13sp"
+                    android:textColor="#6E6E6E" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 2. Understanding Test Results -->
@@ -79,14 +93,26 @@
                 android:src="@drawable/ic_test_result"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Understanding test results"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Understanding test results"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Results are color-coded: green means normal, yellow needs review, red needs attention."
+                    android:textSize="13sp"
+                    android:textColor="#6E6E6E" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 3. Privacy -->
@@ -104,14 +130,26 @@
                 android:src="@drawable/ic_privacy"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Privacy and data security"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy and data security"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Your data is encrypted and stored securely. We comply with regulations and never share without consent."
+                    android:textSize="13sp"
+                    android:textColor="#6E6E6E" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 4. Appointments -->
@@ -129,14 +167,26 @@
                 android:src="@drawable/ic_calender"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Scheduling follow-up appointments"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scheduling follow-up appointments"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Schedule follow-ups directly in the app: pick a time slot and confirm instantly."
+                    android:textSize="13sp"
+                    android:textColor="#6E6E6E" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 5. Sharing Reports -->
@@ -154,14 +204,26 @@
                 android:src="@drawable/ic_share"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sharing reports with doctors"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sharing reports with doctors"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Choose the reports you want and share them securely with your provider."
+                    android:textSize="13sp"
+                    android:textColor="#6E6E6E" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 6. Permissions -->
@@ -179,37 +241,29 @@
                 android:src="@drawable/ic_permission"
                 android:layout_marginEnd="16dp" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="App permissions and access"
-                android:textSize="14sp"
-                android:textColor="#111111"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App permissions and access"
+                    android:textSize="14sp"
+                    android:textColor="#111111"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Camera is used for scanning and storage permission saves your reports locally."
+                    android:textSize="13sp"
+                    android:textColor="#6E6E6E" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Chat Support Button -->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chat with Support"
-            android:backgroundTint="#F35BAC"
-            android:textColor="#FFFFFF"
-            android:textAllCaps="false"
-            android:padding="14dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/rounded_pink_button" />
-
-        <!-- Email Support Button -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Email Us"
-            android:textSize="14sp"
-            android:textColor="#000000"
-            android:padding="12dp" />
+        
 
     </LinearLayout>
 </ScrollView>

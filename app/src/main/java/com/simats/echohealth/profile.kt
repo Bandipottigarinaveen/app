@@ -1,19 +1,37 @@
 package com.simats.echohealth
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.TextView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
+import com.simats.echohealth.utils.ProfileManager
+import java.io.File
+import java.io.FileOutputStream
+import android.view.View
+import android.view.ViewOutlineProvider
+import android.graphics.Outline
 
 class Profile : AppCompatActivity() {
     
     companion object {
         private const val TAG = "Profile"
+        private const val CAMERA_PERMISSION_REQUEST = 200
+        private const val STORAGE_PERMISSION_REQUEST = 201
     }
     
     // Profile data variables
@@ -23,6 +41,48 @@ class Profile : AppCompatActivity() {
     private var userPhone: String = "+1 (555) 123-4567"
     private var userDOB: String = "September 15, 1990"
     private var userUsername: String = "johnsmith"
+    
+    // UI refs
+    private var profilePictureView: ImageView? = null
+    
+    // Selection state
+    private var selectedImageUri: Uri? = null
+    private var selectedImageFile: File? = null
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val imageBitmap = data?.extras?.get("data") as? Bitmap
+            if (imageBitmap != null) {
+                profilePictureView?.setImageBitmap(imageBitmap)
+                selectedImageFile = saveBitmapToFile(imageBitmap)
+                // Persist photo path in local profile (store file path as photo)
+                ProfileManager.saveProfileData(this, photo = selectedImageFile?.absolutePath)
+                Toast.makeText(this, "Photo updated", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to capture photo", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val imageUri = data?.data
+            if (imageUri != null) {
+                try {
+                    selectedImageUri = imageUri
+                    profilePictureView?.setImageURI(imageUri)
+                    // Persist uri string in local profile
+                    ProfileManager.saveProfileData(this, photo = imageUri.toString())
+                    Toast.makeText(this, "Photo updated", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error loading image from gallery: ${e.message}")
+                    Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,13 +144,12 @@ class Profile : AppCompatActivity() {
         try {
             Log.d(TAG, "Setting up profile functionality")
             
-            // Setup profile picture click (for future enhancement)
-            val profilePicture = findViewById<ImageView>(R.id.profilePicture)
-            if (profilePicture != null) {
-                profilePicture.setOnClickListener {
-                    Log.d(TAG, "Profile picture clicked")
-                    Toast.makeText(this, "Profile picture change coming soon!", Toast.LENGTH_SHORT).show()
-                }
+            // Setup profile picture click to change photo inline
+            profilePictureView = findViewById(R.id.profilePicture)
+            profilePictureView?.let { makeCircular(it) }
+            profilePictureView?.setOnClickListener {
+                Log.d(TAG, "Profile picture clicked")
+                showPhotoSelectionDialog()
             }
             
             Log.d(TAG, "Profile functionality setup successful")
@@ -104,13 +163,24 @@ class Profile : AppCompatActivity() {
         try {
             Log.d(TAG, "Loading profile data")
             
-            // Load profile data from SharedPreferences
-            val sharedPref = getSharedPreferences("ProfilePrefs", MODE_PRIVATE)
-            userFullName = sharedPref.getString("full_name", "John Smith") ?: "John Smith"
-            userEmail = sharedPref.getString("email", "johnsmith@email.com") ?: "johnsmith@email.com"
-            userPhone = sharedPref.getString("phone", "+1 (555) 123-4567") ?: "+1 (555) 123-4567"
-            userDOB = sharedPref.getString("dob", "September 15, 1990") ?: "September 15, 1990"
-            userUsername = sharedPref.getString("username", "johnsmith") ?: "johnsmith"
+            // Load profile data from ProfileManager
+            val local = ProfileManager.getProfileData(this)
+            userFullName = if (local.fullName.isNotEmpty()) local.fullName else "John Smith"
+            userEmail = if (local.email.isNotEmpty()) local.email else "johnsmith@email.com"
+            userPhone = if (local.phoneNumber.isNotEmpty()) local.phoneNumber else "+1 (555) 123-4567"
+            userDOB = if (local.dateOfBirth.isNotEmpty()) local.dateOfBirth else "September 15, 1990"
+            userUsername = if (local.username.isNotEmpty()) local.username else "johnsmith"
+            // Load photo if available
+            local.photo?.let { photoStr ->
+                try {
+                    if (photoStr.startsWith("content:") || photoStr.startsWith("file:")) {
+                        profilePictureView?.setImageURI(Uri.parse(photoStr))
+                    } else {
+                        // assume it's a file path
+                        profilePictureView?.setImageURI(Uri.fromFile(File(photoStr)))
+                    }
+                } catch (_: Exception) {}
+            }
             
             Log.d(TAG, "Profile data loaded: $userName, $userEmail, $userFullName, $userPhone, $userDOB, $userUsername")
             
@@ -161,6 +231,128 @@ class Profile : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Error updating profile UI: ${e.message}")
             e.printStackTrace()
+        }
+    }
+
+    private fun makeCircular(imageView: ImageView) {
+        try {
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            imageView.clipToOutline = true
+            imageView.outlineProvider = object : ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: Outline) {
+                    val size = kotlin.math.min(view.width, view.height)
+                    val left = (view.width - size) / 2
+                    val top = (view.height - size) / 2
+                    outline.setOval(left, top, left + size, top + size)
+                }
+            }
+            imageView.post { imageView.invalidateOutline() }
+        } catch (_: Exception) {}
+    }
+
+    private fun showPhotoSelectionDialog() {
+        try {
+            val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Change Profile Photo")
+            builder.setItems(options) { _, which ->
+                when (which) {
+                    0 -> checkCameraPermissionAndOpenCamera()
+                    1 -> checkStoragePermissionAndOpenGallery()
+                    else -> {}
+                }
+            }
+            builder.setCancelable(true)
+            builder.show()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error showing photo selection: ${e.message}")
+        }
+    }
+
+    private fun checkCameraPermissionAndOpenCamera() {
+        try {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking camera permission: ${e.message}")
+        }
+    }
+
+    private fun checkStoragePermissionAndOpenGallery() {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                openGallery()
+            } else {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    openGallery()
+                } else {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION_REQUEST)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking storage permission: ${e.message}")
+        }
+    }
+
+    private fun openCamera() {
+        try {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraLauncher.launch(cameraIntent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error opening camera: ${e.message}")
+        }
+    }
+
+    private fun openGallery() {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                try {
+                    val photoPickerIntent = Intent(MediaStore.ACTION_PICK_IMAGES)
+                    galleryLauncher.launch(photoPickerIntent)
+                    return
+                } catch (_: Exception) {}
+            }
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            galleryLauncher.launch(galleryIntent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error opening gallery: ${e.message}")
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            CAMERA_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera()
+                } else {
+                    Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show()
+                }
+            }
+            STORAGE_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openGallery()
+                } else {
+                    Toast.makeText(this, "Storage permission is required", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun saveBitmapToFile(bitmap: Bitmap): File? {
+        return try {
+            val file = File(cacheDir, "profile_photo_${System.currentTimeMillis()}.jpg")
+            val outputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            outputStream.flush()
+            outputStream.close()
+            file
+        } catch (e: Exception) {
+            Log.e(TAG, "Error saving bitmap: ${e.message}")
+            null
         }
     }
     

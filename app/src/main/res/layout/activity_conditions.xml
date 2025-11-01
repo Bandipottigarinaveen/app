@@ -69,7 +69,7 @@
                 android:id="@+id/introText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Please read these Terms and Conditions carefully before using the breast cancer prediction application."
+                android:text="Please read these Terms and Conditions carefully before using the oral cancer prediction application."
                 android:textSize="14sp"
                 android:layout_marginTop="12dp" />
 
@@ -85,7 +85,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Our app provides preliminary breast cancer risk assessment tools and information. This is not a substitute for professional medical diagnosis."
+                android:text="Our app provides preliminary oral cancer risk assessment tools and information. This is not a substitute for professional medical diagnosis."
                 android:textSize="14sp"
                 android:layout_marginTop="4dp" />
 

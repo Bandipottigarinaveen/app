@@ -12,6 +12,7 @@
         android:layout_marginBottom="80dp">
 
     <LinearLayout
+        android:id="@+id/reports_root"
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_width="match_parent"
@@ -65,108 +66,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- Report Card -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:background="@drawable/bg_card"
-            android:layout_marginTop="16dp"
-            android:padding="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:clipToPadding="false"
-            android:layout_marginBottom="8dp">
-
-            <!-- Date and Time Row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <!-- Date -->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_calendar"
-                        android:layout_marginEnd="6dp" />
-
-                    <TextView
-                        android:text="September 15, 2023"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <!-- Time -->
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_clock"
-                        android:layout_marginEnd="4dp" />
-
-                    <TextView
-                        android:text="2:30 PM"
-                        android:textSize="12sp"
-                        android:textColor="#888888"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Risk Status Row -->
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:text="Low Risk"
-                    android:textStyle="bold"
-                    android:textColor="#0BAA5F"
-                    android:textSize="16sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_check_green" />
-            </LinearLayout>
-
-            <!-- Divider Line -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="12dp"
-                android:background="#E0E0E0" />
-
-            <!-- Recommendation -->
-            <TextView
-                android:text="Next check recommended: 3 months"
-                android:textSize="13sp"
-                android:textColor="#888888"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <!-- Repeat Report Cards here -->
+        <!-- Items will be inserted dynamically -->
 
     </LinearLayout>
     </ScrollView>
